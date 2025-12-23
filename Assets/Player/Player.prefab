@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Movement
   speed: 7
+  constrain: 0
 --- !u!114 &-3324447660850167561
 MonoBehaviour:
   m_ObjectHideFlags: 0
