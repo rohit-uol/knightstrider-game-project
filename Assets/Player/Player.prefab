@@ -48,7 +48,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f75cd5b4d16f6645b356915042d21db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Movement
+  enableGridMovement: 1
   speed: 5
+  stepDelay: 0.2
+  stepSize: 1
+  stepSpeed: 5
 --- !u!114 &-3324447660850167561
 MonoBehaviour:
   m_ObjectHideFlags: 0

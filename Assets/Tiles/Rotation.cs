@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace KnightStrider
+namespace TheMasterPath
 {
     public class Rotation : MonoBehaviour
     {
