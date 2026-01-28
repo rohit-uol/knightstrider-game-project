@@ -1,12 +1,18 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Tilemaps;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace TheMasterPath
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class Movement : MonoBehaviour
     {
+        [SerializeField]
+        Tilemap masterPathTilemap;
+
         /// <summary>
         /// How long a step takes in seconds.
         /// </summary>
@@ -65,6 +71,14 @@ namespace TheMasterPath
             MoveRigidbody();
         }
 
+        void OnValidate()
+        {
+            if (masterPathTilemap == null)
+            {
+                Debug.LogWarning("The master path tilemap cannot be null.", this);
+            }
+        }
+
         /// <summary>
         /// Message called by the PlayerInput component.
         /// </summary>
@@ -84,15 +98,25 @@ namespace TheMasterPath
         }
 
         /// <summary>
-        /// Checks input and starts movement if possible.
+        /// Initiates a step that moves the player from one position to another over time.
+        /// </summary>
+        void MoveTo(Vector2 position)
+        {
+            isMoving = true;
+            stepStart = rb.position;
+            stepEnd = position;
+
+            OnStepStarted();
+        }
+
+        /// <summary>
+        /// Checks input and initiates movement if possible.
         /// </summary>
         void CheckInput()
         {
             if (input.magnitude > 0f && !isMoving)
             {
-                isMoving = true;
-                stepStart = rb.position;
-                stepEnd = rb.position + input.normalized * stepSize;
+                MoveTo(rb.position + input.normalized * stepSize);
             }
         }
 
@@ -117,6 +141,37 @@ namespace TheMasterPath
             {
                 stepTimer = 0f;
                 isMoving = false;
+
+                OnStepEnded();
+            }
+        }
+
+        /// <summary>
+        /// Called when the player starts moving.
+        /// </summary>
+        void OnStepStarted()
+        {
+
+        }
+
+        /// <summary>
+        /// Called when the players stops moving.
+        /// </summary>
+        void OnStepEnded()
+        {
+            CheckPath();
+        }
+
+        /// <summary>
+        /// Checks if the player is on the master path and moves them back if not.
+        /// </summary>
+        void CheckPath()
+        {
+            var cell = masterPathTilemap.WorldToCell(rb.position);
+            var tile = masterPathTilemap.GetTile(cell);
+            if (tile == null)
+            {
+                MoveTo(stepStart);
             }
         }
 
