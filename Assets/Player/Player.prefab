@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4313252667770275787}
   - component: {fileID: 4669915504945198869}
+  - component: {fileID: 447970502458153723}
   - component: {fileID: -3324447660850167561}
   - component: {fileID: -8015161444152202987}
   m_Layer: 0
@@ -47,11 +48,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f75cd5b4d16f6645b356915042d21db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Movement
-  enableGridMovement: 1
-  speed: 5
-  stepDelay: 0.2
+  masterPathTilemap: {fileID: 0}
+  stepTime: 0.25
   stepSize: 1
-  stepSpeed: 5
+--- !u!114 &447970502458153723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919463607502676049}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 344068aa87c72a6448bcbf298a0b48ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TheMasterPath.Health
+  value: 3
 --- !u!114 &-3324447660850167561
 MonoBehaviour:
   m_ObjectHideFlags: 0
