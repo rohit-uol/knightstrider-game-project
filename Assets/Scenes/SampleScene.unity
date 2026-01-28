@@ -2533,14 +2533,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 172501962}
     - target: {fileID: 4669915504945198869, guid: 842d3918a01c61f4cb568db9a8dcfa61, type: 3}
-      propertyPath: stepSize
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4669915504945198869, guid: 842d3918a01c61f4cb568db9a8dcfa61, type: 3}
-      propertyPath: stepTime
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 4669915504945198869, guid: 842d3918a01c61f4cb568db9a8dcfa61, type: 3}
       propertyPath: masterPathTilemap
       value: 
       objectReference: {fileID: 172501962}
