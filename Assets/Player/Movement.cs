@@ -4,12 +4,15 @@ using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace TheMasterPath
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class Movement : MonoBehaviour
     {
+        public event Action TurnBack;
+
         [SerializeField]
         Tilemap masterPathTilemap;
 
@@ -69,14 +72,6 @@ namespace TheMasterPath
         void FixedUpdate()
         {
             MoveRigidbody();
-        }
-
-        void OnValidate()
-        {
-            if (masterPathTilemap == null)
-            {
-                Debug.LogWarning("The master path tilemap cannot be null.", this);
-            }
         }
 
         /// <summary>
@@ -172,6 +167,7 @@ namespace TheMasterPath
             if (tile == null)
             {
                 MoveTo(stepStart);
+                TurnBack?.Invoke();
             }
         }
 
