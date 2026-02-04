@@ -9,6 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: MT Shadow
   m_Shader: {fileID: 4800000, guid: 6550f6ce69d62b841b4c4f6818d8e73c, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -17,6 +19,7 @@ Material:
   m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
+  m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -98,7 +101,7 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _StencilRef: 33
+    - _StencilRef: 0
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
@@ -109,3 +112,4 @@ Material:
     - _ShadowColor: {r: 0.34117648, g: 0.18823525, b: 0.11764706, a: 0.627451}
     - _Tint: {r: 0.21698105, g: 0.11856667, b: 0.070621185, a: 0.3882353}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
