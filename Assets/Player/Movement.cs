@@ -16,6 +16,20 @@ namespace TheMasterPath
         [SerializeField]
         Tilemap masterPathTilemap;
 
+        [Header("Hidable Tilemaps")]
+        [SerializeField] Tilemap hideableTilemap1;
+        [SerializeField] Tilemap hideableTilemap2;
+        [SerializeField] Tilemap hideableTilemap3;
+
+        [Header("Transition Settings")]
+        [Tooltip("How fast the tilemap fades (higher is faster)")]
+        [SerializeField] float fadeSpeed = 5f;
+        [Range(0f, 1f)]
+        [SerializeField] float hiddenAlpha = 0.2f; // Not fully invisible, but transparent
+
+        // Store original alphas here
+        private Dictionary<Tilemap, float> originalAlphas = new Dictionary<Tilemap, float>();
+
         /// <summary>
         /// How long a step takes in seconds.
         /// </summary>
@@ -56,6 +70,11 @@ namespace TheMasterPath
             // Search children for the Animator component
             anim = GetComponentInChildren<Animator>();
 
+            // Capture the starting alpha values
+            CaptureAlpha(hideableTilemap1);
+            CaptureAlpha(hideableTilemap2);
+            CaptureAlpha(hideableTilemap3);
+
             if (anim == null)
             {
                 Debug.LogWarning("Animator not found on " + gameObject.name + " or its children!");
@@ -67,6 +86,9 @@ namespace TheMasterPath
             // Always update animation state
             UpdateAnimationParameters();
             CheckInput();
+
+            // Handle the transparency transitions
+            UpdateTilemapFading();
         }
 
         void FixedUpdate()
@@ -189,6 +211,50 @@ namespace TheMasterPath
                 // We use anim.transform so we only flip the sprite, not the parent logic
                 if (input.x < 0) anim.transform.localScale = new Vector3(-1, 1, 1);
                 else if (input.x > 0) anim.transform.localScale = new Vector3(1, 1, 1);
+            }
+        }
+
+        /// <summary>
+        /// Manages the smooth alpha transition for all three tilemaps.
+        /// </summary>
+        void UpdateTilemapFading()
+        {
+            HandleFade(hideableTilemap1);
+            HandleFade(hideableTilemap2);
+            HandleFade(hideableTilemap3);
+        }
+
+        void HandleFade(Tilemap map)
+        {
+            if (map == null || !originalAlphas.ContainsKey(map)) return;
+            // 1. Get the player's current position in World Space
+            Vector3 playerPos = rb.position;
+
+            // 2. Convert that exact world point to the Tilemap's local Grid coordinate
+            // Note: If your tiles are small, you might want to use rb.worldCenter 
+            // to check the middle of the player instead of their feet.
+            Vector3Int cellPos = map.WorldToCell(playerPos);
+
+            // 3. Check if a tile exists at that coordinate
+            bool isOverlapping = map.HasTile(cellPos);
+
+            // 4. Determine target alpha
+            float targetAlpha = isOverlapping ? hiddenAlpha : originalAlphas[map];
+
+            // 5. Apply the Lerp/MoveTowards
+            Color currentColor = map.color;
+            if (!Mathf.Approximately(currentColor.a, targetAlpha))
+            {
+                float newAlpha = Mathf.MoveTowards(currentColor.a, targetAlpha, fadeSpeed * Time.deltaTime);
+                map.color = new Color(currentColor.r, currentColor.g, currentColor.b, newAlpha);
+            }
+        }
+
+        void CaptureAlpha(Tilemap map)
+        {
+            if (map != null)
+            {
+                originalAlphas[map] = map.color.a;
             }
         }
     }
