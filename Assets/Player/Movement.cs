@@ -42,6 +42,12 @@ namespace TheMasterPath
         [SerializeField]
         float stepSize = 1f;
 
+        /// <summary>
+        /// Curve used for the hop animation during a step.
+        /// </summary>
+        [SerializeField]
+        AnimationCurve stepCurve;
+
         Rigidbody2D rb;
         Animator anim;
 
@@ -62,6 +68,11 @@ namespace TheMasterPath
         /// The target position of a step.
         /// </summary>
         Vector2 stepEnd = Vector2.zero;
+        
+        /// <summary>
+        /// Did the player move already? (reset when a key is released)
+        /// </summary>
+        bool didMove = false;
 
         void Start()
         {
@@ -131,9 +142,14 @@ namespace TheMasterPath
         /// </summary>
         void CheckInput()
         {
-            if (input.magnitude > 0f && !isMoving)
+            if (input.magnitude > 0f && !isMoving && !didMove)
             {
                 MoveTo(rb.position + input.normalized * stepSize);
+            }
+
+            if (didMove && input.magnitude <= 0f && !isMoving)
+            {
+                didMove = false;
             }
         }
 
@@ -151,16 +167,32 @@ namespace TheMasterPath
             t = Mathf.Min(t, 1f);
             var move = (dest - curr) * t;
 
-            rb.MovePosition(stepStart + move);
+            var hopOffset = GetStepAnimationDirection(move.normalized) * 0.25f * stepCurve.Evaluate(t);
+            rb.MovePosition(stepStart + move + hopOffset);
             stepTimer += Time.fixedDeltaTime;
 
             if (t >= 1f)
             {
                 stepTimer = 0f;
                 isMoving = false;
+                didMove = true;
 
                 OnStepEnded();
             }
+        }
+
+        Vector2 GetStepAnimationDirection(Vector2 stepDirection)
+        {
+            if (stepDirection.x == 1 || stepDirection.x == -1)
+            {
+                return new Vector2(0, 1);
+            }
+            else if (stepDirection.y == 1 || stepDirection.y == -1)
+            {
+                return new Vector2(1, 0);
+            }
+
+            return Vector2.zero;
         }
 
         /// <summary>
@@ -200,7 +232,7 @@ namespace TheMasterPath
             // Logic: Moving if we haven't reached target yet OR if we are pushing a key
             bool isMovingNow = Vector2.Distance(rb.position, stepEnd) > 0.05f || input.magnitude > 0.1f;
 
-            anim.SetBool("isMoving", isMovingNow);
+            //anim.SetBool("isMoving", isMovingNow);
 
             if (input.magnitude > 0.1f)
             {
