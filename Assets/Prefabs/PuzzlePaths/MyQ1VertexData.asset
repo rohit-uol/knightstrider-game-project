@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c33248e3d1d2e1744aca79dd2158b855, type: 3}
+  m_Name: MyQ1VertexData
+  m_EditorClassIdentifier: Assembly-CSharp::Q1VertexData
+  quadrantVertexCount: 5
+  v0: {x: -5, y: 0}
+  v1: {x: -5, y: 8}
+  v2: {x: -3, y: 8}
+  v3: {x: -3, y: 5}
+  v4: {x: 0, y: 5}
+  v5: {x: 0, y: 3.5}
+  v6: {x: 0, y: 0}
+  v7: {x: 0, y: 0}
+  v8: {x: 0, y: 0}
+  v9: {x: 0, y: 0}
+  v10: {x: 0, y: 0}
+  v11: {x: 0, y: 0}
+  v12: {x: 0, y: 0}
+  v13: {x: 0, y: 0}
+  v14: {x: 0, y: 0}
+  v15: {x: 0, y: 0}
+  v16: {x: 0, y: 0}
+  v17: {x: 0, y: 0}
+  v18: {x: 0, y: 0}
+  v19: {x: 0, y: 0}
