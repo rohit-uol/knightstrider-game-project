@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: MyQ1VertexData
   m_EditorClassIdentifier: Assembly-CSharp::Q1VertexData
   quadrantVertexCount: 5
-  v0: {x: -7, y: 0}
-  v1: {x: -7, y: 4}
-  v2: {x: -2, y: 4}
-  v3: {x: -2, y: 7}
-  v4: {x: 0, y: 7}
+  v0: {x: -5, y: 0}
+  v1: {x: -5, y: 8}
+  v2: {x: -3, y: 8}
+  v3: {x: -3, y: 5}
+  v4: {x: 0, y: 5}
   v5: {x: 0, y: 3.5}
   v6: {x: 0, y: 0}
   v7: {x: 0, y: 0}
