@@ -43,9 +43,18 @@ public class LevelPreview : MonoBehaviour
         if(polygonData == null)
             return;
 
+        // Get the current Z of this object
+        float targetZ = transform.position.z;
         q1VertexCount = polygonData.q1VertexCount;
         q1Segment = new Vector3[q1VertexCount];
+
         System.Array.Copy(polygonData.worldVertices, q1Segment, q1VertexCount);
+
+        // 2. Force every vertex to match the current object's Z
+        for (int i = 0; i < q1VertexCount; i++)
+        {
+            q1Segment[i].z = targetZ;
+        }
 
         // Reversed copy for Q2/Q3/Q4 so they slide visually left-to-right
         q1SegmentReversed = new Vector3[q1VertexCount];
@@ -141,9 +150,13 @@ public class LevelPreview : MonoBehaviour
         Vector3[] q3Pos = GetSegmentPositions(q1SegmentReversed, offsetQ3);
         Vector3[] q4Pos = GetSegmentPositions(q1SegmentReversed, offsetQ4);
 
-        Vector3 q2Center = GetBoundsCenter(q2Pos);
-        Vector3 q3Center = GetBoundsCenter(q3Pos);
-        Vector3 q4Center = GetBoundsCenter(q4Pos);
+
+        // Try exactly 1.5 if the shift is purely vertical
+        Vector3 pivotOffset = new Vector3(0, -1.5f, 0);
+
+        Vector3 q2Center = GetBoundsCenter(q2Pos) + pivotOffset;
+        Vector3 q3Center = GetBoundsCenter(q3Pos) + pivotOffset;
+        Vector3 q4Center = GetBoundsCenter(q4Pos) + pivotOffset;
 
         // Q2: 90 deg clockwise = 3 × 30°
         yield return DiscreteRotate(segQ2, q2Pos, q2Center, -90f, q2RotateDuration);
@@ -260,6 +273,11 @@ public class LevelPreview : MonoBehaviour
         lr.useWorldSpace = true;
         lr.material = lineMaterial;
 
+        // 2. FORCE SORTING (This is the most important part for 2D)
+        // "Default" is the standard layer; 100 ensures it's above most sprites.
+        lr.sortingLayerName = "Default";
+        lr.sortingOrder = 100;
+
         lr.startWidth = segmentWidth;
         lr.endWidth = segmentWidth;
 
@@ -269,6 +287,10 @@ public class LevelPreview : MonoBehaviour
 
         lr.numCapVertices = 2;
         lr.numCornerVertices = 2;
+
+        lr.alignment = LineAlignment.TransformZ; // Fixes the "View" alignment issue
+lr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+lr.receiveShadows = false;
 
         return lr;
     }
