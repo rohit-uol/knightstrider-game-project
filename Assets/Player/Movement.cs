@@ -138,6 +138,12 @@ namespace TheMasterPath
             OnStepStarted();
         }
 
+        public void Teleport(Vector2 position)
+        {
+            isMoving = false;
+            transform.position = position;
+        }
+
         /// <summary>
         /// Checks input and initiates movement if possible.
         /// </summary>
