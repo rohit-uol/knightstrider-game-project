@@ -48,7 +48,6 @@ public class LevelPreview : MonoBehaviour
         q1VertexCount = polygonData.q1VertexCount;
         q1Segment = new Vector3[q1VertexCount];
 
-        // 1. Copy the vertices
         System.Array.Copy(polygonData.worldVertices, q1Segment, q1VertexCount);
 
         // 2. Force every vertex to match the current object's Z
@@ -151,9 +150,13 @@ public class LevelPreview : MonoBehaviour
         Vector3[] q3Pos = GetSegmentPositions(q1SegmentReversed, offsetQ3);
         Vector3[] q4Pos = GetSegmentPositions(q1SegmentReversed, offsetQ4);
 
-        Vector3 q2Center = GetBoundsCenter(q2Pos);
-        Vector3 q3Center = GetBoundsCenter(q3Pos);
-        Vector3 q4Center = GetBoundsCenter(q4Pos);
+
+        // Try exactly 1.5 if the shift is purely vertical
+        Vector3 pivotOffset = new Vector3(0, -1.5f, 0);
+
+        Vector3 q2Center = GetBoundsCenter(q2Pos) + pivotOffset;
+        Vector3 q3Center = GetBoundsCenter(q3Pos) + pivotOffset;
+        Vector3 q4Center = GetBoundsCenter(q4Pos) + pivotOffset;
 
         // Q2: 90 deg clockwise = 3 × 30°
         yield return DiscreteRotate(segQ2, q2Pos, q2Center, -90f, q2RotateDuration);

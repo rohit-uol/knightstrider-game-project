@@ -162,9 +162,9 @@ MonoBehaviour:
   q3RotateDuration: 0.75
   q4RotateDuration: 0.75
   offsetQ1: {x: 0, y: 0, z: 0}
-  offsetQ2: {x: 7, y: 0, z: 0}
-  offsetQ3: {x: 7, y: -7, z: 0}
-  offsetQ4: {x: 0, y: -7, z: 0}
+  offsetQ2: {x: 5, y: 0, z: 0}
+  offsetQ3: {x: 5, y: -5, z: 0}
+  offsetQ4: {x: 0, y: -5, z: 0}
 --- !u!4 &4718155
 Transform:
   m_ObjectHideFlags: 0
