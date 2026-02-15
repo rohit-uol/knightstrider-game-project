@@ -102,7 +102,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 344068aa87c72a6448bcbf298a0b48ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TheMasterPath.Health
-  value: 3
+  resetPoints: {fileID: 0}
+  value: 5
 --- !u!114 &5170326432889362960
 MonoBehaviour:
   m_ObjectHideFlags: 0

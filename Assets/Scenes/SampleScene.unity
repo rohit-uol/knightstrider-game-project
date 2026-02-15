@@ -7979,6 +7979,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1258480291}
+  - component: {fileID: 1258480292}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -8002,6 +8003,23 @@ Transform:
   - {fileID: 1247628719}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1258480292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258480290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6142c12af1929940b6ad75e20f63e8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TheMasterPath.ResetPoints
+  resetPoints:
+  - {x: 0.03999996, y: -5.44}
+  - {x: 6.04, y: 0.5599999}
+  - {x: -5.96, y: 1.56}
+  - {x: 0.03999996, y: 6.56}
 --- !u!4 &1289171529 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7947911505737750448, guid: cfa0a5ef94fb05d4f97d095a05dc55c5, type: 3}
@@ -12810,6 +12828,10 @@ PrefabInstance:
       propertyPath: m_UseFullKinematicContacts
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 447970502458153723, guid: 842d3918a01c61f4cb568db9a8dcfa61, type: 3}
+      propertyPath: resetPoints
+      value: 
+      objectReference: {fileID: 1258480292}
     - target: {fileID: 919463607502676049, guid: 842d3918a01c61f4cb568db9a8dcfa61, type: 3}
       propertyPath: m_Name
       value: Player
