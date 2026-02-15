@@ -43,9 +43,19 @@ public class LevelPreview : MonoBehaviour
         if(polygonData == null)
             return;
 
+        // Get the current Z of this object
+        float targetZ = transform.position.z;
         q1VertexCount = polygonData.q1VertexCount;
         q1Segment = new Vector3[q1VertexCount];
+
+        // 1. Copy the vertices
         System.Array.Copy(polygonData.worldVertices, q1Segment, q1VertexCount);
+
+        // 2. Force every vertex to match the current object's Z
+        for (int i = 0; i < q1VertexCount; i++)
+        {
+            q1Segment[i].z = targetZ;
+        }
 
         // Reversed copy for Q2/Q3/Q4 so they slide visually left-to-right
         q1SegmentReversed = new Vector3[q1VertexCount];
@@ -260,6 +270,11 @@ public class LevelPreview : MonoBehaviour
         lr.useWorldSpace = true;
         lr.material = lineMaterial;
 
+        // 2. FORCE SORTING (This is the most important part for 2D)
+        // "Default" is the standard layer; 100 ensures it's above most sprites.
+        lr.sortingLayerName = "Default";
+        lr.sortingOrder = 100;
+
         lr.startWidth = segmentWidth;
         lr.endWidth = segmentWidth;
 
@@ -269,6 +284,10 @@ public class LevelPreview : MonoBehaviour
 
         lr.numCapVertices = 2;
         lr.numCornerVertices = 2;
+
+        lr.alignment = LineAlignment.TransformZ; // Fixes the "View" alignment issue
+lr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+lr.receiveShadows = false;
 
         return lr;
     }
