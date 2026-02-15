@@ -11,6 +11,7 @@ namespace TheMasterPath
     [RequireComponent(typeof(Rigidbody2D))]
     public class Movement : MonoBehaviour
     {
+        public event Action<Vector2, Vector2> StepStarted;
         public event Action TurnBack;
 
         [SerializeField]
@@ -200,7 +201,7 @@ namespace TheMasterPath
         /// </summary>
         void OnStepStarted()
         {
-
+            StepStarted?.Invoke(stepStart, stepEnd);
         }
 
         /// <summary>
