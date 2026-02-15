@@ -11,6 +11,7 @@ namespace TheMasterPath
     [RequireComponent(typeof(Rigidbody2D))]
     public class Movement : MonoBehaviour
     {
+        public event Action<Vector2, Vector2> StepStarted;
         public event Action TurnBack;
 
         [SerializeField]
@@ -137,6 +138,12 @@ namespace TheMasterPath
             OnStepStarted();
         }
 
+        public void Teleport(Vector2 position)
+        {
+            isMoving = false;
+            transform.position = position;
+        }
+
         /// <summary>
         /// Checks input and initiates movement if possible.
         /// </summary>
@@ -200,7 +207,7 @@ namespace TheMasterPath
         /// </summary>
         void OnStepStarted()
         {
-
+            StepStarted?.Invoke(stepStart, stepEnd);
         }
 
         /// <summary>

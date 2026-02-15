@@ -6,11 +6,14 @@ namespace TheMasterPath
     [RequireComponent(typeof(Movement))]
     public class Health : MonoBehaviour
     {
+        [SerializeField]
+        ResetPoints resetPoints;
+
         /// <summary>
         /// The current health value.
         /// </summary>
         [SerializeField]
-        int value = 3;
+        int value = 5;
 
         Movement movement;
 
@@ -26,6 +29,7 @@ namespace TheMasterPath
         void OnTurnBack()
         {
             value -= 1;
+            movement.Teleport(resetPoints.Get(transform.position));
 
             if (value <= 0)
             {
