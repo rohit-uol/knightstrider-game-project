@@ -12,8 +12,8 @@ namespace TheMasterPath
         /// <summary>
         /// The current health value.
         /// </summary>
-        [SerializeField]
-        int value = 5;
+        [field: SerializeField]
+        public int Value { get; private set; } = 5;
 
         Movement movement;
 
@@ -28,10 +28,10 @@ namespace TheMasterPath
         /// </summary>
         void OnTurnBack()
         {
-            value -= 1;
+            Value -= 1;
             movement.Teleport(resetPoints.Get(transform.position));
 
-            if (value <= 0)
+            if (Value <= 0)
             {
                 ReloadScene();
             }
@@ -43,11 +43,6 @@ namespace TheMasterPath
         void ReloadScene()
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
-
-        void OnGUI()
-        {
-            GUI.Label(new Rect(10, 10, 100, 100), $"health:{value}");
         }
     }
 }
