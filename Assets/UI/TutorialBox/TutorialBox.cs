@@ -11,6 +11,8 @@ namespace TheMasterPath
 
         const string HELP_ACTION_NAME = "UI/Help";
 
+        public bool IsOpen => ui.activeSelf;
+
         void Start()
         {
             if (!Application.isEditor || showInEditor)
@@ -28,6 +30,11 @@ namespace TheMasterPath
         }
 
         public void OnHelp(InputAction.CallbackContext ctx)
+        {
+            Toggle();
+        }
+
+        public void Toggle()
         {
             ui.SetActive(!ui.activeSelf);
         }
