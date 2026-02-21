@@ -9927,6 +9927,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1258480291}
   - component: {fileID: 1258480292}
+  - component: {fileID: 1258480293}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -9970,6 +9971,20 @@ MonoBehaviour:
   - {fileID: 420101592}
   - {fileID: 1751586205}
   - {fileID: 1754886304}
+--- !u!114 &1258480293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1258480290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ebb9cdc967f19541b9d41eecba1ae8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TheMasterPath.Utilities.MapDestroyer
+  targetTilemaps:
+  - {fileID: 1136229661}
 --- !u!4 &1289171529 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7947911505737750448, guid: cfa0a5ef94fb05d4f97d095a05dc55c5, type: 3}
@@ -12621,7 +12636,7 @@ Transform:
   m_GameObject: {fileID: 1544550914}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0.70710576, w: 0.70710784}
-  m_LocalPosition: {x: 4.62, y: -0.39, z: 0}
+  m_LocalPosition: {x: 4.62, y: 0.03, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
