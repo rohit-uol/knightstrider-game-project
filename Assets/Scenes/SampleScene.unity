@@ -4296,6 +4296,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6728176375418110600, guid: 1dbdee084bf0ec24ea7910d1fe87bdd7, type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7593373193408446797, guid: 1dbdee084bf0ec24ea7910d1fe87bdd7, type: 3}
       propertyPath: m_Name
       value: loadLevel
@@ -9849,10 +9853,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TheMasterPath.ResetPoints
   resetTransforms:
-  - {fileID: 1754886304}
-  - {fileID: 1751586205}
   - {fileID: 1911122669}
   - {fileID: 420101592}
+  - {fileID: 1751586205}
+  - {fileID: 1754886304}
 --- !u!4 &1289171529 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7947911505737750448, guid: cfa0a5ef94fb05d4f97d095a05dc55c5, type: 3}
