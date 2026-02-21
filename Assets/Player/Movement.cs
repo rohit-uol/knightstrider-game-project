@@ -134,7 +134,6 @@ namespace TheMasterPath
             isMoving = true;
             stepStart = rb.position;
             stepEnd = position;
-
             OnStepStarted();
         }
 
@@ -236,6 +235,7 @@ namespace TheMasterPath
             if (tile == null)
             {
                 MoveTo(stepStart);
+
                 TurnBack?.Invoke();
             }
         }

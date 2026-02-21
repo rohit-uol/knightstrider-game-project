@@ -1,4 +1,5 @@
 using UnityEngine;
+using TheMasterPath.Utilities;
 
 namespace TheMasterPath
 {
@@ -30,11 +31,8 @@ namespace TheMasterPath
 
         public Vector2 Get(Vector2 position)
         {
-            var x = position.x + transform.position.x < 0f ? 0 : 1;
-            var y = position.y + transform.position.y < 0f ? 0 : 1;
-
-            var index = y * 2 + x;
-
+            int quad = NavigationUtils.GetQuadrant(position);
+            int index = quad - 1;
             // Return the captured position from the start of the game
             return resetPositions[index];
         }
