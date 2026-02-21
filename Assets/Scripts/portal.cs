@@ -13,7 +13,16 @@ public class TeleportZone : MonoBehaviour
         if (recentlyTeleported.Contains(obj))
             return;
 
-        other.transform.position = exitPoint.position;
+        // Check if the object has  Movement script
+        if (obj.TryGetComponent<TheMasterPath.Movement>(out var movement))
+        {
+            movement.Teleport(exitPoint.position);
+        }
+        else
+        {
+            // Fallback for objects without the script
+            return;
+        }
 
         TeleportZone exitZone;
         if (exitPoint.TryGetComponent<TeleportZone>(out exitZone))

@@ -140,8 +140,16 @@ namespace TheMasterPath
 
         public void Teleport(Vector2 position)
         {
+           
             isMoving = false;
+            stepTimer = 0f; // Reset the timer
+
+            // Crucial: Update these so if CheckPath() runs, 
+            // it thinks we are already "at" the destination.
+            rb.position = position;
             transform.position = position;
+            stepStart = position;
+            stepEnd = position;
         }
 
         /// <summary>
@@ -296,5 +304,7 @@ namespace TheMasterPath
                 originalAlphas[map] = map.color.a;
             }
         }
+
     }
-}
+
+    }
