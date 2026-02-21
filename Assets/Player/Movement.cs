@@ -12,6 +12,7 @@ namespace TheMasterPath
     public class Movement : MonoBehaviour
     {
         public event Action<Vector2, Vector2> StepStarted;
+        public event Action<Vector2, Vector2> StepEnded;
         public event Action TurnBack;
 
         [SerializeField]
@@ -224,6 +225,7 @@ namespace TheMasterPath
         void OnStepEnded()
         {
             CheckPath();
+            StepEnded?.Invoke(stepStart, stepEnd);
         }
 
         /// <summary>
