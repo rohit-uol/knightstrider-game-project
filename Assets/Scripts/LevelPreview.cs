@@ -9,7 +9,7 @@ public class LevelPreview : MonoBehaviour
     public int q1VertexCount;  // can be read from polygonData.q1VertexCount
 
     [Header("Rendering")]
-    public LineRenderer fullPolygonRenderer; // optional: the static final polygon
+    public LineRenderer fullPolygonRenderer; // optional: not used
     public Material lineMaterial;
 
     [Header("Appearance")]
@@ -38,6 +38,19 @@ public class LevelPreview : MonoBehaviour
     Vector3[] q1Segment;        // Q1 vertices (original order)
     Vector3[] q1SegmentReversed; // Reversed for Q2/Q3/Q4 (left-to-right slide)
 
+
+[Header("Tracer Prefab")]
+    public GameObject tracerPrefab;     
+    public float tracerSpeed = 2f;      
+    [HideInInspector] public Transform tracerInstance;
+    [HideInInspector] public SpriteRenderer tracerSR;
+
+    [Header("Background")]
+    public GameObject backgroundPrefab;  
+    [HideInInspector] public Transform backgroundInstance;
+    public Vector3 backgroundOffset = Vector3.zero;
+
+
     void Awake()
     {
         if(polygonData == null)
@@ -50,8 +63,8 @@ public class LevelPreview : MonoBehaviour
 
         System.Array.Copy(polygonData.worldVertices, q1Segment, q1VertexCount);
 
-        // 2. Force every vertex to match the current object's Z
-        for (int i = 0; i < q1VertexCount; i++)
+        // Force every vertex to match the current object's Z
+        for(int i = 0; i < q1VertexCount; i++)
         {
             q1Segment[i].z = targetZ;
         }
@@ -87,6 +100,78 @@ public class LevelPreview : MonoBehaviour
         SetLineAlpha(segQ2, 0f);
         SetLineAlpha(segQ3, 0f);
         SetLineAlpha(segQ4, 0f);
+
+        // --- Background spawn (behind everything) ---
+        backgroundInstance = null;
+        if(backgroundPrefab != null)
+        {
+            // Instantiate but keeps prefab's local pos
+            GameObject bgInst = Instantiate(backgroundPrefab, transform, false);  // false = worldPosStays=false
+            backgroundInstance = bgInst.transform;
+
+            SpriteRenderer bgSR = bgInst.GetComponent<SpriteRenderer>();
+            if(bgSR != null)
+            {
+                bgSR.sortingLayerName = "Default";
+                bgSR.sortingOrder = 50;
+                bgSR.enabled = true;
+
+                // ONLY override Z (world space), keep prefab's local X/Y/scale/rot
+                backgroundInstance.position = new Vector3(
+                    backgroundInstance.position.x,
+                    backgroundInstance.position.y,
+                    targetZ
+                );
+
+                Debug.Log($"Background spawned at world pos: {backgroundInstance.position} (prefab local: {backgroundInstance.localPosition})");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("LevelPreview: backgroundPrefab not assigned.");
+        }
+
+
+        // --- Tracer prefab spawn ---
+        tracerInstance = null;
+        tracerSR = null;
+
+        if(tracerPrefab != null)
+        {
+            GameObject inst = Instantiate(tracerPrefab, transform);
+            tracerInstance = inst.transform;
+            tracerSR = inst.GetComponent<SpriteRenderer>();
+
+            if(tracerSR != null)
+            {
+                // FORCE VISIBILITY 
+                tracerSR.enabled = false;
+                tracerSR.sortingLayerName = "Default";
+                tracerSR.sortingOrder = 150;  // Above segments (100)
+
+                // Match segments' Z exactly
+                tracerInstance.position = new Vector3(0, 0, targetZ);
+
+                // FORCE SCALE
+                tracerInstance.localScale = Vector3.one;
+
+                // FORCE MAGENTA COLOR + OPAQUE for URP visibility test
+                tracerSR.color = Color.magenta;  // Bright test color
+
+                // FORCE material as URP Sprite/Lit/Default - if not assigned in inspector
+                if(tracerSR.material == null || tracerSR.material.name.Contains("Default"))
+                {
+                    tracerSR.material = new Material(Shader.Find("Universal Render Pipeline/2D/Sprite-Lit-Default"));
+                }
+
+                Debug.Log("Tracer spawned: pos=" + tracerInstance.position + " scale=" + tracerInstance.localScale + " color=" + tracerSR.color);
+            }
+            else
+            {
+                Debug.LogError("LevelPreview: tracerPrefab has NO SpriteRenderer!");
+            }
+        }
+
     }
 
     void OnEnable()
@@ -168,6 +253,9 @@ public class LevelPreview : MonoBehaviour
 
         // Q4: 270 deg clockwise = 9 × 30°
         yield return DiscreteRotate(segQ4, q4Pos, q4Center, -270f, q4RotateDuration);
+
+        // TRACER PATH (after all rotations)
+        yield return StartTracerPath();
 
         // Fade out all segments simultaneously
         yield return new WaitForSeconds(fadeOutDelay);
@@ -273,24 +361,24 @@ public class LevelPreview : MonoBehaviour
         lr.useWorldSpace = true;
         lr.material = lineMaterial;
 
-        // 2. FORCE SORTING (This is the most important part for 2D)
-        // "Default" is the standard layer; 100 ensures it's above most sprites.
+        // FORCE SORTING
+        // "Default" standard layer; 
         lr.sortingLayerName = "Default";
         lr.sortingOrder = 100;
 
         lr.startWidth = segmentWidth;
         lr.endWidth = segmentWidth;
 
-        // Material handles color, LineRenderer only handles ALPHA
-        lr.startColor = Color.white;  // (1,1,1,1) → material tints it red
-        lr.endColor = Color.white;  // (1,1,1,1) → material tints it red
+        // LineRenderer to handle ALPHA
+        lr.startColor = Color.white;  // (1,1,1,1) 
+        lr.endColor = Color.white;  // (1,1,1,1) 
 
         lr.numCapVertices = 2;
         lr.numCornerVertices = 2;
 
-        lr.alignment = LineAlignment.TransformZ; // Fixes the "View" alignment issue
-lr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-lr.receiveShadows = false;
+        lr.alignment = LineAlignment.TransformZ; // Fix "View" alignment bug
+        lr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        lr.receiveShadows = false;
 
         return lr;
     }
@@ -325,7 +413,7 @@ lr.receiveShadows = false;
 
     IEnumerator DiscreteRotate(LineRenderer lr, Vector3[] from, Vector3 center, float totalDegrees, float duration)
     {
-        float stepAngle = -30f; // 30° clockwise steps
+        float stepAngle = -30f; // 30 degree clockwise steps
         int steps = Mathf.RoundToInt(Mathf.Abs(totalDegrees) / 30f);
         float stepDuration = duration / steps;
 
@@ -342,7 +430,7 @@ lr.receiveShadows = false;
                 t += Time.deltaTime;
                 float u = Mathf.Clamp01(t / stepDuration);
 
-                // Interpolate smoothly between current and next 30° step
+                // Interpolate smoothly between current and next 30 degree step
                 Vector3[] intermediate = new Vector3[current.Length];
                 for(int j = 0; j < current.Length; j++)
                     intermediate[j] = Vector3.Lerp(current[j], next[j], u);
@@ -352,7 +440,7 @@ lr.receiveShadows = false;
                 yield return null;
             }
 
-            current = next; // Snap to next 30° position
+            current = next; // Snap to next 30 degree position
             lr.SetPositions(current);
         }
     }
@@ -366,6 +454,10 @@ lr.receiveShadows = false;
         float aQ2 = segQ2 != null ? segQ2.startColor.a : 0f;
         float aQ3 = segQ3 != null ? segQ3.startColor.a : 0f;
         float aQ4 = segQ4 != null ? segQ4.startColor.a : 0f;
+
+        // Add tracer fade (if visible)
+        float startTracerAlpha = tracerSR != null ? tracerSR.color.a : 0f;
+
 
         while(t < duration)
         {
@@ -381,6 +473,14 @@ lr.receiveShadows = false;
             if(segQ4 != null)
                 SetLineAlpha(segQ4, Mathf.Lerp(aQ4, 0f, u));
 
+            if(tracerSR != null && tracerSR.enabled)
+            {
+                Color c = tracerSR.color;
+                c.a = Mathf.Lerp(startTracerAlpha, 0f, u);
+                tracerSR.color = c;
+            }
+            yield return null;
+
             yield return null;
         }
 
@@ -392,6 +492,83 @@ lr.receiveShadows = false;
             SetLineAlpha(segQ3, 0f);
         if(segQ4 != null)
             SetLineAlpha(segQ4, 0f);
+
+        if(tracerSR != null)
+            tracerSR.enabled = false;
+    }
+
+    IEnumerator StartTracerPath()
+    {
+        Debug.Log("StartTracerPath ENTERED");
+
+        if(tracerSR == null || tracerInstance == null)
+        {
+            Debug.LogError("StartTracerPath: tracerSR/tracerInstance NULL!");
+            yield break;
+        }
+
+        // FINAL VISIBILITY CHECKS BEFORE TRACE
+        tracerSR.enabled = true;
+        tracerInstance.localScale = Vector3.one;  // Re-force scale
+        tracerSR.color = Color.magenta;           // Test color
+        Debug.Log($"Tracer VIS CHECK: enabled={tracerSR.enabled} pos={tracerInstance.position} scale={tracerInstance.localScale} color={tracerSR.color}");
+
+        Vector3[] rawPath = polygonData.worldVertices;
+        Debug.Log($"Tracer path length: {rawPath.Length}");
+
+        // Filter path 
+        System.Collections.Generic.List<Vector3> validPath = new System.Collections.Generic.List<Vector3>();
+        float targetZ = transform.position.z;  // Match segments
+        for(int i = 0; i < rawPath.Length; i++)
+        {
+            Vector3 v = rawPath[i];
+            if(v == Vector3.zero)
+                continue;
+            v.z = targetZ;  // FORCE Z MATCH - for 2D ortho camera
+            if(validPath.Count == 0 || Vector3.Distance(validPath[validPath.Count - 1], v) > 0.01f)
+                validPath.Add(v);
+        }
+
+        Vector3[] path = validPath.ToArray();
+        if(path.Length < 2)
+        {
+            Debug.LogError("Not enough path vertices.");
+            tracerSR.enabled = false;
+            yield break;
+        }
+
+        // Trace segments - FORCE Z/scale each frame
+        for(int i = 0; i < path.Length - 1; i++)
+        {
+            Vector3 startPos = path[i];
+            Vector3 endPos = path[i + 1];
+            float distance = Vector3.Distance(startPos, endPos);
+            if(distance < 0.01f)
+                continue;
+
+            float duration = distance / tracerSpeed;
+            Debug.Log($"Tracing {i}: {startPos} → {endPos} (dist={distance:F2}s)");
+
+            float elapsed = 0f;
+            while(elapsed < duration)
+            {
+                elapsed += Time.deltaTime;
+                float t = Mathf.Clamp01(elapsed / duration);
+                tracerInstance.position = Vector3.Lerp(startPos, endPos, t);
+                tracerInstance.localScale = Vector3.one;  // Anti-scale-loss
+
+                // Orient forward
+                Vector3 dir = (endPos - startPos).normalized;
+                //float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+                //tracerInstance.rotation = Quaternion.Euler(0f, 0f, angle);
+
+                yield return null;
+            }
+        }
+
+        // Hide after trace (fade integrated below)
+        tracerSR.enabled = false;
+        Debug.Log("Tracer path COMPLETE");
     }
 
 
