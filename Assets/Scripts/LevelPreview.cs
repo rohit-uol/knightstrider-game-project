@@ -39,7 +39,7 @@ public class LevelPreview : MonoBehaviour
     Vector3[] q1SegmentReversed; // Reversed for Q2/Q3/Q4 (left-to-right slide)
 
 
-[Header("Tracer Prefab")]
+    [Header("Tracer Prefab")]
     public GameObject tracerPrefab;     
     public float tracerSpeed = 2f;      
     [HideInInspector] public Transform tracerInstance;
@@ -455,8 +455,14 @@ public class LevelPreview : MonoBehaviour
         float aQ3 = segQ3 != null ? segQ3.startColor.a : 0f;
         float aQ4 = segQ4 != null ? segQ4.startColor.a : 0f;
 
-        // Add tracer fade (if visible)
+        // get tracer fade (if visible)
         float startTracerAlpha = tracerSR != null ? tracerSR.color.a : 0f;
+
+        // get background alpha
+        float aBg = 1f;
+        SpriteRenderer bgSR = backgroundInstance != null ? backgroundInstance.GetComponent<SpriteRenderer>() : null;
+        if(bgSR != null && bgSR.enabled)
+            aBg = bgSR.color.a;
 
 
         while(t < duration)
@@ -479,9 +485,16 @@ public class LevelPreview : MonoBehaviour
                 c.a = Mathf.Lerp(startTracerAlpha, 0f, u);
                 tracerSR.color = c;
             }
-            yield return null;
 
-            yield return null;
+            // ADD: Background fade (same timing)
+            if(bgSR != null && bgSR.enabled)
+            {
+                Color c = bgSR.color;
+                c.a = Mathf.Lerp(aBg, 0f, u);
+                bgSR.color = c;
+            }
+
+            yield return null;            
         }
 
         if(segQ1 != null)
@@ -495,6 +508,9 @@ public class LevelPreview : MonoBehaviour
 
         if(tracerSR != null)
             tracerSR.enabled = false;
+
+        if(bgSR != null)
+            bgSR.color = new Color(bgSR.color.r, bgSR.color.g, bgSR.color.b, 0f);
     }
 
     IEnumerator StartTracerPath()
