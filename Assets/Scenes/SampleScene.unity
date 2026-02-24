@@ -166,9 +166,12 @@ MonoBehaviour:
   offsetQ3: {x: 5, y: -5, z: 0}
   offsetQ4: {x: 0, y: -5, z: 0}
   tracerPrefab: {fileID: 5797573910834458336, guid: afa280344dc7ac649bd02bcecbd3ddb5, type: 3}
-  tracerSpeed: 2
+  tracerSpeed: 12
   tracerInstance: {fileID: 0}
   tracerSR: {fileID: 0}
+  backgroundPrefab: {fileID: 6638566385129559422, guid: 568853f297940744daa83bbc7ef7b1ed, type: 3}
+  backgroundInstance: {fileID: 0}
+  backgroundOffset: {x: 0, y: 0, z: 0}
 --- !u!4 &4718155
 Transform:
   m_ObjectHideFlags: 0

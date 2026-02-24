@@ -1,6 +1,8 @@
 ﻿using UnityEditor;
 using UnityEngine;
 using System.Collections;
+using UnityEngine.InputSystem;  
+
 
 public class LevelPreview : MonoBehaviour
 {
@@ -49,6 +51,9 @@ public class LevelPreview : MonoBehaviour
     public GameObject backgroundPrefab;  
     [HideInInspector] public Transform backgroundInstance;
     public Vector3 backgroundOffset = Vector3.zero;
+
+    Coroutine previewRoutine;
+    bool isEndingEarly = false;
 
 
     void Awake()
@@ -178,7 +183,18 @@ public class LevelPreview : MonoBehaviour
     {
         if(polygonData == null)
             return;
-        StartCoroutine(PlayPreview());
+        //StartCoroutine(PlayPreview());
+        isEndingEarly = false;
+        previewRoutine = StartCoroutine(PlayPreview());
+    }
+
+    void Update()
+    {
+        if(Keyboard.current != null && Keyboard.current.spaceKey.wasPressedThisFrame)
+        {
+            Debug.Log("SPACE pressed – ending preview early");
+            TryEndPreviewEarly();
+        }
     }
 
     void InitSegment(LineRenderer lr, Vector3[] baseVerts, Vector3 offset)
@@ -206,29 +222,45 @@ public class LevelPreview : MonoBehaviour
     {
         // Fade Q1 in place (original order)
         yield return FadeLine(segQ1, 0f, 1f, fadeInDuration);
+      //  if(isEndingEarly)
+        //    yield break;
 
         yield return new WaitForSeconds(pauseBetweenSteps);
+        //if(isEndingEarly)
+          //  yield break;
 
         // Copy slides Q1 -> Q2 (reversed verts = left-to-right)
         InitSegment(segQ2, q1SegmentReversed, offsetQ1);
         SetLineAlpha(segQ2, 1f);
         yield return SlideSegment(segQ2, q1SegmentReversed, offsetQ1, offsetQ2, moveDuration);
+       // if(isEndingEarly)
+         //   yield break;
 
         yield return new WaitForSeconds(pauseBetweenSteps);
+        //if(isEndingEarly)
+          //  yield break;
 
         // Copy slides Q2 -> Q3 (reversed verts)
         InitSegment(segQ3, q1SegmentReversed, offsetQ2);
         SetLineAlpha(segQ3, 1f);
         yield return SlideSegment(segQ3, q1SegmentReversed, offsetQ2, offsetQ3, moveDuration);
+        //if(isEndingEarly)
+          //  yield break;
 
         yield return new WaitForSeconds(pauseBetweenSteps);
+        //if(isEndingEarly)
+          //  yield break;
 
         // Copy slides Q3 -> Q4 (reversed verts)
         InitSegment(segQ4, q1SegmentReversed, offsetQ3);
         SetLineAlpha(segQ4, 1f);
         yield return SlideSegment(segQ4, q1SegmentReversed, offsetQ3, offsetQ4, moveDuration);
+        //if(isEndingEarly)
+          //  yield break;
 
         yield return new WaitForSeconds(pauseBetweenSteps);
+        //if(isEndingEarly)
+          //  yield break;
 
         // Discrete 90 deg clockwise rotations (no flipping)        
         Vector3[] q2Pos = GetSegmentPositions(q1SegmentReversed, offsetQ2);
@@ -245,22 +277,34 @@ public class LevelPreview : MonoBehaviour
 
         // Q2: 90 deg clockwise = 3 × 30°
         yield return DiscreteRotate(segQ2, q2Pos, q2Center, -90f, q2RotateDuration);
+       // if(isEndingEarly)
+         //   yield break;
         yield return new WaitForSeconds(pauseBetweenSteps);
 
         // Q3: 180 deg clockwise = 6 × 30°  
         yield return DiscreteRotate(segQ3, q3Pos, q3Center, -180f, q3RotateDuration);
+       // if(isEndingEarly)
+         //   yield break;
         yield return new WaitForSeconds(pauseBetweenSteps);
 
         // Q4: 270 deg clockwise = 9 × 30°
         yield return DiscreteRotate(segQ4, q4Pos, q4Center, -270f, q4RotateDuration);
+        //if(isEndingEarly)
+          //  yield break;
 
         // TRACER PATH (after all rotations)
         yield return StartTracerPath();
+        //if(isEndingEarly)
+          //  yield break;
 
         // Fade out all segments simultaneously
         yield return new WaitForSeconds(fadeOutDelay);
+       // if(isEndingEarly)
+         //   yield break;
 
         yield return FadeAllSegmentsOut(fadeOutDuration);
+       // if(isEndingEarly)
+         //   yield break;
 
     }
 
@@ -511,6 +555,12 @@ public class LevelPreview : MonoBehaviour
 
         if(bgSR != null)
             bgSR.color = new Color(bgSR.color.r, bgSR.color.g, bgSR.color.b, 0f);
+
+
+        // Hide preview in scene
+        yield return null;  // final frame
+        gameObject.SetActive(false);  // disable render/Update calls
+
     }
 
     IEnumerator StartTracerPath()
@@ -585,6 +635,24 @@ public class LevelPreview : MonoBehaviour
         // Hide after trace (fade integrated below)
         tracerSR.enabled = false;
         Debug.Log("Tracer path COMPLETE");
+    }
+
+    void TryEndPreviewEarly()
+    {
+        if(isEndingEarly)
+            return; // already triggered once
+
+        isEndingEarly = true;
+
+        // stop the main preview coroutine if running
+        if(previewRoutine != null)
+        {
+            StopCoroutine(previewRoutine);
+            previewRoutine = null;
+        }
+
+        // immediately start fade-out
+        StartCoroutine(FadeAllSegmentsOut(fadeOutDuration));
     }
 
 
