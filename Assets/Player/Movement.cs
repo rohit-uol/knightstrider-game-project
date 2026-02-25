@@ -29,6 +29,9 @@ namespace TheMasterPath
         [Range(0f, 1f)]
         [SerializeField] float hiddenAlpha = 0.2f; // Not fully invisible, but transparent
 
+        [SerializeField]
+        Collider2D triggerCollider;
+
         // Store original alphas here
         private Dictionary<Tilemap, float> originalAlphas = new Dictionary<Tilemap, float>();
 
@@ -215,6 +218,7 @@ namespace TheMasterPath
         /// </summary>
         void OnStepStarted()
         {
+            triggerCollider.enabled = false;
             StepStarted?.Invoke(stepStart, stepEnd);
         }
 
@@ -223,6 +227,7 @@ namespace TheMasterPath
         /// </summary>
         void OnStepEnded()
         {
+            triggerCollider.enabled = true;
             CheckPath();
             StepEnded?.Invoke(stepStart, stepEnd);
         }
