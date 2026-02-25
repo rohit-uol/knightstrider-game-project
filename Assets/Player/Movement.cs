@@ -104,7 +104,7 @@ namespace TheMasterPath
             CheckInput();
 
             // Handle the transparency transitions
-            UpdateTilemapFading();
+            // UpdateTilemapFading();
         }
 
         void FixedUpdate()
