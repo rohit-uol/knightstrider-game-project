@@ -23,6 +23,10 @@ namespace TheMasterPath.Utilities
         [SerializeField] private GameObject dissolvePrefab;
         [Tooltip("Higher value = faster dissolve. 2 ≈ 0.5 s, 1 ≈ 1 s.")]
         [SerializeField] private float dissolveSpeed = 2f;
+        [Tooltip("AudioSource on this GameObject used to play the dissolve SFX.")]
+        [SerializeField] private AudioSource audioSource;
+        [Tooltip("Assign Assets/SFX/Shatter/freesound_community-rock-smash-6304.mp3 or any clip.")]
+        [SerializeField] private AudioClip dissolveClip;
 
         // Use the center from our existing Utils or define here
         private Vector2 _center = new Vector2(10.5f, -5.0f);
@@ -39,6 +43,13 @@ namespace TheMasterPath.Utilities
         /// </summary>
         public void HideQuadrant(int targetQuadrant)
         {
+            // Play dissolve SFX once as the destruction begins
+            if (audioSource != null && dissolveClip != null)
+            {
+                audioSource.pitch = Random.Range(0.9f, 1.1f);
+                audioSource.PlayOneShot(dissolveClip);
+            }
+
             // Destroy props in this quadrant immediately
             if (propsParent != null)
             {
