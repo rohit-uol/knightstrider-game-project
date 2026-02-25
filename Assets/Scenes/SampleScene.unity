@@ -15600,6 +15600,14 @@ PrefabInstance:
       propertyPath: tilemap
       value: 
       objectReference: {fileID: 995452534}
+    - target: {fileID: 5170326432889362960, guid: 842d3918a01c61f4cb568db9a8dcfa61, type: 3}
+      propertyPath: footstepsTilemap
+      value: 
+      objectReference: {fileID: 995452534}
+    - target: {fileID: 5170326432889362960, guid: 842d3918a01c61f4cb568db9a8dcfa61, type: 3}
+      propertyPath: masterPathTilemap
+      value: 
+      objectReference: {fileID: 784462603}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
