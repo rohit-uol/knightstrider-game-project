@@ -169,13 +169,7 @@ public class LevelPreview : MonoBehaviour
 
                 // FORCE alpha=0 start + URP material
                 introTextTMP.alpha = 0f;
-                
-                //FaceCamera faceScript = introTextInstance.gameObject.GetComponent<FaceCamera>();
-                //if(faceScript == null)
-                //{
-                  //  faceScript = introTextInstance.gameObject.AddComponent<FaceCamera>();
-                //}
-
+             
                 Debug.Log($"Text: 'Level Preview' pos={introTextInstance.position} scale={introTextInstance.localScale} alpha={introTextTMP.alpha}");
             }
         }
@@ -374,6 +368,8 @@ public class LevelPreview : MonoBehaviour
 
     IEnumerator FadeLine(LineRenderer lr, float from, float to, float duration)
     {
+        lr.enabled = true;
+
         float t = 0f;
         while(t < duration)
         {
@@ -490,7 +486,7 @@ public class LevelPreview : MonoBehaviour
         lr.alignment = LineAlignment.TransformZ; // Fix "View" alignment bug
         lr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
         lr.receiveShadows = false;
-
+        
         return lr;
     }
 
