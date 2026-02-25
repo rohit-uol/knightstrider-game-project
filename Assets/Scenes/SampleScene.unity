@@ -2849,11 +2849,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2055102311959635375, guid: f681a54372d73d74785b9c9d4ac477e8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.09
+      value: 1.48
       objectReference: {fileID: 0}
     - target: {fileID: 2055102311959635375, guid: f681a54372d73d74785b9c9d4ac477e8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.86
+      value: 1.57
       objectReference: {fileID: 0}
     - target: {fileID: 2055102311959635375, guid: f681a54372d73d74785b9c9d4ac477e8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2927,7 +2927,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2055102311959635375, guid: f681a54372d73d74785b9c9d4ac477e8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.78
+      value: 1.29
       objectReference: {fileID: 0}
     - target: {fileID: 2055102311959635375, guid: f681a54372d73d74785b9c9d4ac477e8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -9095,6 +9095,9 @@ MonoBehaviour:
   targetTilemaps:
   - {fileID: 1136229661}
   propsParent: {fileID: 978722903}
+  trackedObjects:
+  - {fileID: 385789484}
+  - {fileID: 1717458269}
   dissolvePrefab: {fileID: 5050648745073574249, guid: 8b183c2ef1b95a64eadd7b53ec82930d, type: 3}
   dissolveSpeed: 1
 --- !u!4 &1289171529 stripped

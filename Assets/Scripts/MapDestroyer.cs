@@ -15,6 +15,8 @@ namespace TheMasterPath.Utilities
         [SerializeField] private Tilemap[] targetTilemaps;
         [Tooltip("Drag the Props parent Transform here (Map/Layer 1/Props).")]
         [SerializeField] private Transform propsParent;
+        [Tooltip("Drag individual buildings or large objects here (e.g. Building Custom1). Destroyed per-quadrant.")]
+        [SerializeField] private GameObject[] trackedObjects;
 
         [Header("Dissolve Effect")]
         [Tooltip("Ghost-tile prefab: an empty GameObject with a SpriteRenderer using Mat_Dissolve.")]
@@ -47,6 +49,13 @@ namespace TheMasterPath.Utilities
                 }
             }
 
+            // Destroy individually tracked objects (e.g. tilemap-based buildings)
+            foreach (GameObject obj in trackedObjects)
+            {
+                if (obj != null && NavigationUtils.GetQuadrant(GetObjectCenter(obj)) == targetQuadrant)
+                    Destroy(obj);
+            }
+
             foreach (Tilemap map in targetTilemaps)
             {
                 if (map == null) continue;
@@ -72,6 +81,34 @@ namespace TheMasterPath.Utilities
             }
 
             Debug.Log($"<color=cyan>MapDestroyer:</color> Dissolving tiles in Quadrant {targetQuadrant}.");
+        }
+
+        // ---------------------------------------------------------------
+        // Helpers
+        // ---------------------------------------------------------------
+
+        /// <summary>
+        /// Returns the world-space center of an object.
+        /// For tilemap-based buildings the transform.position is the Grid origin
+        /// (often 0,0,0), so we read the Tilemap cell bounds instead.
+        /// </summary>
+        private static Vector3 GetObjectCenter(GameObject obj)
+        {
+            // Tilemap-based building: use the tile bounds center
+            Tilemap tm = obj.GetComponentInChildren<Tilemap>();
+            if (tm != null)
+            {
+                tm.CompressBounds();
+                return tm.transform.TransformPoint(tm.localBounds.center);
+            }
+
+            // Sprite/mesh object: use the renderer bounds center
+            Renderer rend = obj.GetComponentInChildren<Renderer>();
+            if (rend != null)
+                return rend.bounds.center;
+
+            // Fallback
+            return obj.transform.position;
         }
 
         // ---------------------------------------------------------------
