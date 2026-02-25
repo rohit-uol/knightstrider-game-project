@@ -13,6 +13,8 @@ namespace TheMasterPath.Utilities
 
         [Header("Targeting")]
         [SerializeField] private Tilemap[] targetTilemaps;
+        [Tooltip("Drag the Props parent Transform here (Map/Layer 1/Props).")]
+        [SerializeField] private Transform propsParent;
 
         [Header("Dissolve Effect")]
         [Tooltip("Ghost-tile prefab: an empty GameObject with a SpriteRenderer using Mat_Dissolve.")]
@@ -35,6 +37,16 @@ namespace TheMasterPath.Utilities
         /// </summary>
         public void HideQuadrant(int targetQuadrant)
         {
+            // Destroy props in this quadrant immediately
+            if (propsParent != null)
+            {
+                foreach (Transform child in propsParent)
+                {
+                    if (NavigationUtils.GetQuadrant(child.position) == targetQuadrant)
+                        Destroy(child.gameObject);
+                }
+            }
+
             foreach (Tilemap map in targetTilemaps)
             {
                 if (map == null) continue;
@@ -59,7 +71,7 @@ namespace TheMasterPath.Utilities
                 }
             }
 
-            Debug.Log($"<color=cyan>MapDestroyer:</color> Dissolving all tiles in Quadrant {targetQuadrant}");
+            Debug.Log($"<color=cyan>MapDestroyer:</color> Dissolving tiles in Quadrant {targetQuadrant}.");
         }
 
         // ---------------------------------------------------------------

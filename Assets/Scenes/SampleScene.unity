@@ -9094,6 +9094,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TheMasterPath.Utilities.MapDestroyer
   targetTilemaps:
   - {fileID: 1136229661}
+  propsParent: {fileID: 978722903}
   dissolvePrefab: {fileID: 5050648745073574249, guid: 8b183c2ef1b95a64eadd7b53ec82930d, type: 3}
   dissolveSpeed: 1
 --- !u!4 &1289171529 stripped
