@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5170326432889362960}
   - component: {fileID: -3324447660850167561}
   - component: {fileID: -8015161444152202987}
+  - component: {fileID: 5241595753167371716}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -55,6 +56,7 @@ MonoBehaviour:
   hideableTilemap3: {fileID: 0}
   fadeSpeed: 5
   hiddenAlpha: 0.2
+  triggerCollider: {fileID: 5241595753167371716}
   stepTime: 0.05
   stepSize: 1
   stepCurve:
@@ -117,7 +119,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TheMasterPath.Footsteps
   movement: {fileID: 4669915504945198869}
-  tilemap: {fileID: 0}
+  footstepsTilemap: {fileID: 0}
+  masterPathTilemap: {fileID: 0}
   correctTile: {fileID: 11400000, guid: 3a0e8af5e200e2a41936ea49856a7239, type: 2}
   incorrectTile: {fileID: 11400000, guid: 2827358fb3fd47445887d5118965b170, type: 2}
 --- !u!114 &-3324447660850167561
@@ -253,6 +256,42 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
+--- !u!58 &5241595753167371716
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919463607502676049}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 0.7
 --- !u!1 &2232513758322990099
 GameObject:
   m_ObjectHideFlags: 0
