@@ -1,11 +1,21 @@
 ﻿using UnityEditor;
 using UnityEngine;
 using System.Collections;
-using UnityEngine.InputSystem;  
+using UnityEngine.InputSystem;
+using TMPro;
 
 
 public class LevelPreview : MonoBehaviour
 {
+    [Header("Intro Text")]
+    public GameObject introTextPrefab;  //  3D object TextMeshPro prefab - NOT UI TextMeshPro!!!
+    [HideInInspector] public TextMeshPro introTextTMP;
+    [HideInInspector] public Transform introTextInstance;
+    public Vector3 introTextOffset = Vector3.zero;  // e.g., (0,2,0)
+    public float introFadeInDuration = 1f;
+    public float introHoldDuration = 1.5f;
+    public float introFadeOutDuration = 1f;
+
     [Header("Data")]
     public PolygonVertexData polygonData;
     public int q1VertexCount;  // can be read from polygonData.q1VertexCount
@@ -42,13 +52,13 @@ public class LevelPreview : MonoBehaviour
 
 
     [Header("Tracer Prefab")]
-    public GameObject tracerPrefab;     
-    public float tracerSpeed = 2f;      
+    public GameObject tracerPrefab;
+    public float tracerSpeed = 2f;
     [HideInInspector] public Transform tracerInstance;
     [HideInInspector] public SpriteRenderer tracerSR;
 
     [Header("Background")]
-    public GameObject backgroundPrefab;  
+    public GameObject backgroundPrefab;
     [HideInInspector] public Transform backgroundInstance;
     public Vector3 backgroundOffset = Vector3.zero;
 
@@ -136,6 +146,40 @@ public class LevelPreview : MonoBehaviour
             Debug.LogWarning("LevelPreview: backgroundPrefab not assigned.");
         }
 
+        // intro Text spawn 
+        introTextInstance = null;
+        introTextTMP = null;
+        if(introTextPrefab != null)
+        {
+            GameObject textInst = Instantiate(introTextPrefab, transform, false);
+            introTextInstance = textInst.transform;
+            introTextTMP = textInst.GetComponent<TextMeshPro>();
+
+            if(introTextTMP != null)
+            {
+       
+                introTextInstance.position = new Vector3(
+                    introTextInstance.position.x + introTextOffset.x,
+                    introTextInstance.position.y + introTextOffset.y,
+                    //targetZ + introTextOffset.z
+                    targetZ  - 1f
+                );
+                introTextInstance.localScale = new Vector3(2f, 2f, 1f);  // Medium
+
+
+                // FORCE alpha=0 start + URP material
+                introTextTMP.alpha = 0f;
+                
+                //FaceCamera faceScript = introTextInstance.gameObject.GetComponent<FaceCamera>();
+                //if(faceScript == null)
+                //{
+                  //  faceScript = introTextInstance.gameObject.AddComponent<FaceCamera>();
+                //}
+
+                Debug.Log($"Text: 'Level Preview' pos={introTextInstance.position} scale={introTextInstance.localScale} alpha={introTextTMP.alpha}");
+            }
+        }
+
 
         // --- Tracer prefab spawn ---
         tracerInstance = null;
@@ -220,47 +264,58 @@ public class LevelPreview : MonoBehaviour
 
     IEnumerator PlayPreview()
     {
+        // Intro text sequence BEFORE segments
+        if(introTextTMP != null)
+        {
+            yield return FadeTMPAlpha(introTextTMP, 0f, 1f, introFadeInDuration);
+            yield return new WaitForSeconds(introHoldDuration);
+            yield return FadeTMPAlpha(introTextTMP, 1f, 0f, introFadeOutDuration);
+        }
+
+        // Then original Q1 fade
+        yield return FadeLine(segQ1, 0f, 1f, fadeInDuration);
+
         // Fade Q1 in place (original order)
         yield return FadeLine(segQ1, 0f, 1f, fadeInDuration);
-      //  if(isEndingEarly)
+        //  if(isEndingEarly)
         //    yield break;
 
         yield return new WaitForSeconds(pauseBetweenSteps);
         //if(isEndingEarly)
-          //  yield break;
+        //  yield break;
 
         // Copy slides Q1 -> Q2 (reversed verts = left-to-right)
         InitSegment(segQ2, q1SegmentReversed, offsetQ1);
         SetLineAlpha(segQ2, 1f);
         yield return SlideSegment(segQ2, q1SegmentReversed, offsetQ1, offsetQ2, moveDuration);
-       // if(isEndingEarly)
-         //   yield break;
+        // if(isEndingEarly)
+        //   yield break;
 
         yield return new WaitForSeconds(pauseBetweenSteps);
         //if(isEndingEarly)
-          //  yield break;
+        //  yield break;
 
         // Copy slides Q2 -> Q3 (reversed verts)
         InitSegment(segQ3, q1SegmentReversed, offsetQ2);
         SetLineAlpha(segQ3, 1f);
         yield return SlideSegment(segQ3, q1SegmentReversed, offsetQ2, offsetQ3, moveDuration);
         //if(isEndingEarly)
-          //  yield break;
+        //  yield break;
 
         yield return new WaitForSeconds(pauseBetweenSteps);
         //if(isEndingEarly)
-          //  yield break;
+        //  yield break;
 
         // Copy slides Q3 -> Q4 (reversed verts)
         InitSegment(segQ4, q1SegmentReversed, offsetQ3);
         SetLineAlpha(segQ4, 1f);
         yield return SlideSegment(segQ4, q1SegmentReversed, offsetQ3, offsetQ4, moveDuration);
         //if(isEndingEarly)
-          //  yield break;
+        //  yield break;
 
         yield return new WaitForSeconds(pauseBetweenSteps);
         //if(isEndingEarly)
-          //  yield break;
+        //  yield break;
 
         // Discrete 90 deg clockwise rotations (no flipping)        
         Vector3[] q2Pos = GetSegmentPositions(q1SegmentReversed, offsetQ2);
@@ -277,34 +332,34 @@ public class LevelPreview : MonoBehaviour
 
         // Q2: 90 deg clockwise = 3 × 30°
         yield return DiscreteRotate(segQ2, q2Pos, q2Center, -90f, q2RotateDuration);
-       // if(isEndingEarly)
-         //   yield break;
+        // if(isEndingEarly)
+        //   yield break;
         yield return new WaitForSeconds(pauseBetweenSteps);
 
         // Q3: 180 deg clockwise = 6 × 30°  
         yield return DiscreteRotate(segQ3, q3Pos, q3Center, -180f, q3RotateDuration);
-       // if(isEndingEarly)
-         //   yield break;
+        // if(isEndingEarly)
+        //   yield break;
         yield return new WaitForSeconds(pauseBetweenSteps);
 
         // Q4: 270 deg clockwise = 9 × 30°
         yield return DiscreteRotate(segQ4, q4Pos, q4Center, -270f, q4RotateDuration);
         //if(isEndingEarly)
-          //  yield break;
+        //  yield break;
 
         // TRACER PATH (after all rotations)
         yield return StartTracerPath();
         //if(isEndingEarly)
-          //  yield break;
+        //  yield break;
 
         // Fade out all segments simultaneously
         yield return new WaitForSeconds(fadeOutDelay);
-       // if(isEndingEarly)
-         //   yield break;
+        // if(isEndingEarly)
+        //   yield break;
 
         yield return FadeAllSegmentsOut(fadeOutDuration);
-       // if(isEndingEarly)
-         //   yield break;
+        // if(isEndingEarly)
+        //   yield break;
 
     }
 
@@ -328,6 +383,18 @@ public class LevelPreview : MonoBehaviour
             yield return null;
         }
         SetLineAlpha(lr, to);
+    }
+
+    IEnumerator FadeTMPAlpha(TextMeshPro tmp, float from, float to, float duration)
+    {
+        float t = 0f;
+        while(t < duration)
+        {
+            t += Time.deltaTime;
+            tmp.alpha = Mathf.Lerp(from, to, t / duration);
+            yield return null;
+        }
+        tmp.alpha = to;
     }
 
     IEnumerator SlideSegment(LineRenderer lr, Vector3[] baseVerts, Vector3 startOffset, Vector3 endOffset, float duration)
@@ -538,7 +605,7 @@ public class LevelPreview : MonoBehaviour
                 bgSR.color = c;
             }
 
-            yield return null;            
+            yield return null;
         }
 
         if(segQ1 != null)
@@ -555,6 +622,12 @@ public class LevelPreview : MonoBehaviour
 
         if(bgSR != null)
             bgSR.color = new Color(bgSR.color.r, bgSR.color.g, bgSR.color.b, 0f);
+
+        // Hide intro text
+        if(introTextTMP != null)
+        {
+            introTextTMP.alpha = 0f;
+        }
 
 
         // Hide preview in scene
