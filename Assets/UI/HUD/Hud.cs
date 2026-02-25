@@ -22,6 +22,9 @@ namespace TheMasterPath
         TextMeshProUGUI healthText;
 
         [SerializeField]
+        TextMeshProUGUI timeText;
+
+        [SerializeField]
         TutorialBox tutorialBox;
 
         [SerializeField]
@@ -45,16 +48,22 @@ namespace TheMasterPath
         void Update()
         {
             UpdateHealthText();
+            UpdateTimeText();
         }
 
         void UpdateLevelText()
         {
-            levelText.SetText($"Lvl {level}");
+            levelText.SetText(level.ToString("00"));
         }
 
         void UpdateHealthText()
         {
-            healthText.SetText($"Hp {health.Value}");
+            healthText.SetText(health.Value.ToString("00"));
+        }
+
+        void UpdateTimeText()
+        {
+            timeText.SetText(Time.realtimeSinceStartup.ToString("00"));
         }
     }
 }
