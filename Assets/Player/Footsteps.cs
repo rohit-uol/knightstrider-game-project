@@ -6,8 +6,10 @@ namespace TheMasterPath
     public class Footsteps : MonoBehaviour
     {
         [SerializeField] Movement movement;
-        [SerializeField] Tilemap tilemap;
-        [SerializeField] Tile tile;
+        [SerializeField] Tilemap footstepsTilemap;
+        [SerializeField] Tilemap masterPathTilemap;
+        [SerializeField] Tile correctTile;
+        [SerializeField] Tile incorrectTile;
 
         void Start()
         {
@@ -16,13 +18,18 @@ namespace TheMasterPath
 
         private void OnStepStarted(Vector2 stepStart, Vector2 stepEnd)
         {
-            var cell = tilemap.WorldToCell(stepStart);
+            var cell = footstepsTilemap.WorldToCell(stepStart);
 
-            tilemap.SetTile(cell, tile);
+            Tile footsteps = correctTile;
+            if (masterPathTilemap.GetTile(cell) == null)
+            {
+                footsteps = incorrectTile;
+            }
+            footstepsTilemap.SetTile(cell, footsteps);
 
             var dir = (stepEnd - stepStart).normalized;
             var angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
-            tilemap.SetTransformMatrix(cell, Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0f, 0f, angle), Vector3.one));
+            footstepsTilemap.SetTransformMatrix(cell, Matrix4x4.TRS(Vector3.zero, Quaternion.Euler(0f, 0f, angle), Vector3.one));
         }
     }
 }

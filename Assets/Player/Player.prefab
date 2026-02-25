@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TheMasterPath.Health
   resetPoints: {fileID: 0}
-  value: 5
+  <Value>k__BackingField: 5
 --- !u!114 &5170326432889362960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,7 +118,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TheMasterPath.Footsteps
   movement: {fileID: 4669915504945198869}
   tilemap: {fileID: 0}
-  tile: {fileID: 11400000, guid: 3a0e8af5e200e2a41936ea49856a7239, type: 2}
+  correctTile: {fileID: 11400000, guid: 3a0e8af5e200e2a41936ea49856a7239, type: 2}
+  incorrectTile: {fileID: 11400000, guid: 2827358fb3fd47445887d5118965b170, type: 2}
 --- !u!114 &-3324447660850167561
 MonoBehaviour:
   m_ObjectHideFlags: 0
