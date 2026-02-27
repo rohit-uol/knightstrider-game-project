@@ -14073,6 +14073,10 @@ PrefabInstance:
       propertyPath: masterPathTilemap
       value: 
       objectReference: {fileID: 784462603}
+    - target: {fileID: 5463798694980913568, guid: 842d3918a01c61f4cb568db9a8dcfa61, type: 3}
+      propertyPath: m_DrawMode
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
