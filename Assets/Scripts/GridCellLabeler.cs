@@ -30,9 +30,11 @@ public class GridCellLabeler : MonoBehaviour
                 // Get the world center of the specific cell
                 Vector3 worldPos = grid.GetCellCenterWorld(cellPosition);
 
+#if UNITY_EDITOR
                 // Use Handles to draw the text in the Scene View
                 string label = $"{x},{y}";
                 Handles.Label(worldPos, label, style);
+#endif
             }
         }
     }
