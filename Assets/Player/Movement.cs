@@ -13,7 +13,9 @@ namespace TheMasterPath
     {
         public event Action<Vector2, Vector2> StepStarted;
         public event Action<Vector2, Vector2> StepEnded;
-        public event Action TurnBack;
+        public event Action<Vector2> TurnBack;
+
+        public bool EnableInput { get; set; } = true;
 
         [SerializeField]
         Tilemap masterPathTilemap;
@@ -101,7 +103,11 @@ namespace TheMasterPath
         {
             // Always update animation state
             UpdateAnimationParameters();
-            CheckInput();
+
+            if (EnableInput)
+            {
+                CheckInput();
+            }
 
             // Handle the transparency transitions
             // UpdateTilemapFading();
@@ -133,7 +139,7 @@ namespace TheMasterPath
         /// <summary>
         /// Initiates a step that moves the player from one position to another over time.
         /// </summary>
-        void MoveTo(Vector2 position)
+        public void MoveTo(Vector2 position)
         {
             isMoving = true;
             stepStart = rb.position;
@@ -143,7 +149,6 @@ namespace TheMasterPath
 
         public void Teleport(Vector2 position)
         {
-           
             isMoving = false;
             stepTimer = 0f; // Reset the timer
 
@@ -233,17 +238,16 @@ namespace TheMasterPath
         }
 
         /// <summary>
-        /// Checks if the player is on the master path and moves them back if not.
+        /// Checks if the player is on the master path and invokes the TurnBack event if not.
         /// </summary>
         void CheckPath()
         {
-            var cell = masterPathTilemap.WorldToCell(rb.position);
+            var cell = masterPathTilemap.WorldToCell(stepEnd);
             var tile = masterPathTilemap.GetTile(cell);
             if (tile == null)
             {
-                MoveTo(stepStart);
-
-                TurnBack?.Invoke();
+                TurnBack?.Invoke(stepStart);
+                EnableInput = false;
             }
         }
 
