@@ -145,7 +145,6 @@ MonoBehaviour:
   source: {fileID: 3370999134348095773}
   movement: {fileID: 0}
   clips:
-  - {fileID: 8300000, guid: 415123c0d95b13f4a91ff36bc3343e3d, type: 3}
   - {fileID: 8300000, guid: c86aefc88855bfc4ea1ab5ae74cb0a8d, type: 3}
   - {fileID: 8300000, guid: a3f12c103628099448aec07ed5de9ab0, type: 3}
   - {fileID: 8300000, guid: f311ed417f663d841a8a351b8694ffeb, type: 3}
