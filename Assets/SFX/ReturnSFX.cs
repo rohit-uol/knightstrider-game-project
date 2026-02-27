@@ -6,7 +6,7 @@ namespace TheMasterPath
     {
         [SerializeField] AudioSource source;
         [SerializeField] Movement movement;
-        [SerializeField] AudioClip clip;
+        [SerializeField] AudioClip[] clips;
 
         void Start()
         {
@@ -15,8 +15,10 @@ namespace TheMasterPath
 
         void OnTurnBack(Vector2 stepStart)
         {
-            source.pitch = Random.Range(0.9f, 1.1f);
-            source.PlayOneShot(clip);
+            foreach (var clip in clips)
+            {
+                source.PlayOneShot(clip);
+            }
         }
     }
 }
