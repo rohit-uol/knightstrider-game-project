@@ -1,4 +1,4 @@
-Shader "Custom/Silhouette"
+Shader "Custom/Knight"
 {
 	Properties
 	{
@@ -9,18 +9,19 @@ Shader "Custom/Silhouette"
 	{
 		Tags { "Queue"="Overlay" "RenderType"="Transparent" }
 		
+		Stencil
+		{
+			Ref 1
+			Comp Always
+			Pass IncrSat
+		}
+
 		Pass
 		{
 			ZWrite Off
 			Cull Off
 			Blend SrcAlpha OneMinusSrcAlpha
 			ZTest Always
-
-			Stencil
-			{
-				Ref 2
-				Comp Equal
-			}
 
 			HLSLPROGRAM
 			#include "UnityCG.cginc"
@@ -54,9 +55,7 @@ Shader "Custom/Silhouette"
 
 			float4 frag(v2f i): SV_TARGET
 			{
-				float a = tex2D(_MainTex, i.uv).a;
-				float4 color = _Color;
-				color.a = a;
+				float4 color = tex2D(_MainTex, i.uv);
 				return color;
 			}
 			ENDHLSL
