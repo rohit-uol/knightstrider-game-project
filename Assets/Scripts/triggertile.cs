@@ -1,14 +1,18 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using TMPro;
 
 public class LevelLoader : MonoBehaviour
 {
     public Animator transition;   // Animator for fade effect
     public string nextLevelName;  // Name of the next scene
+    public TextMeshProUGUI timeText;
+    public float waitTime = 1f;
 
     private AudioSource source;
     private bool hasPlayed = false;
+
 
     void Awake()
     {
@@ -32,9 +36,11 @@ public class LevelLoader : MonoBehaviour
 
     IEnumerator LoadLevel(string levelName)
     {
+        timeText.enabled = true;
+        timeText.SetText($"TIME\n{Time.realtimeSinceStartup:00:00}");
         transition.SetTrigger("fade");  // Capital S
 
-        yield return new WaitForSeconds(1f); // Capital W
+        yield return new WaitForSeconds(waitTime); // Capital W
 
         SceneManager.LoadScene(levelName);
     }
