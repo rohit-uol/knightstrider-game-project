@@ -53,17 +53,22 @@ namespace TheMasterPath
 
         void UpdateLevelText()
         {
-            levelText.SetText(level.ToString("00"));
+            levelText.SetText(GetLimitedValue(level).ToString("00"));
         }
 
         void UpdateHealthText()
         {
-            healthText.SetText(health.Value.ToString("00"));
+            healthText.SetText(GetLimitedValue(health.Value).ToString("00"));
         }
 
         void UpdateTimeText()
         {
-            timeText.SetText(Time.realtimeSinceStartup.ToString("00"));
+            timeText.SetText(GetLimitedValue(Time.realtimeSinceStartup).ToString("00"));
+        }
+
+        float GetLimitedValue(float value)
+        {
+            return Mathf.Min(value, 999f);
         }
     }
 }
