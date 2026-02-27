@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 namespace TheMasterPath
 {
@@ -8,6 +9,12 @@ namespace TheMasterPath
     {
         [SerializeField]
         ResetPoints resetPoints;
+
+        [SerializeField]
+        float animationTime;
+
+        [SerializeField]
+        Animator playerAnimator;
 
         /// <summary>
         /// The current health value.
@@ -26,15 +33,38 @@ namespace TheMasterPath
         /// <summary>
         /// Called when the player is turned back.
         /// </summary>
-        void OnTurnBack()
+        void OnTurnBack(Vector2 stepStart)
         {
             Value -= 1;
-            movement.Teleport(resetPoints.Get(transform.position));
-
-            if (Value <= 0)
+            playerAnimator.SetTrigger("death");
+            StartCoroutine(WaitForAnimation(() =>
             {
-                ReloadScene();
-            }
+                if (Value > 0)
+                {
+                    movement.MoveTo(resetPoints.Get(transform.position));
+
+                    StartCoroutine(WaitForTurnBack(() =>
+                    {
+                        movement.EnableInput = true;
+                    }));
+                }
+                else
+                {
+                    ReloadScene();
+                }
+            }));
+        }
+
+        IEnumerator WaitForAnimation(System.Action callback)
+        {
+            yield return new WaitForSeconds(animationTime);
+            callback.Invoke();
+        }
+
+        IEnumerator WaitForTurnBack(System.Action callback)
+        {
+            yield return new WaitForSeconds(0.25f);
+            callback.Invoke();
         }
 
         /// <summary>

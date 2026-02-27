@@ -105,6 +105,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TheMasterPath.Health
   resetPoints: {fileID: 0}
+  animationTime: 1
+  playerAnimator: {fileID: 7287769375641998529}
   <Value>k__BackingField: 5
 --- !u!114 &5170326432889362960
 MonoBehaviour:
@@ -303,7 +305,7 @@ GameObject:
   - component: {fileID: 2155633942607815896}
   - component: {fileID: 5463798694980913568}
   - component: {fileID: 7287769375641998529}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Knight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
