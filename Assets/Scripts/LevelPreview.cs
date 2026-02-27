@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.InputSystem;
 using TMPro;
+using UnityEngine.Events;
 
 
 public class LevelPreview : MonoBehaviour
@@ -61,6 +62,9 @@ public class LevelPreview : MonoBehaviour
     public GameObject backgroundPrefab;
     [HideInInspector] public Transform backgroundInstance;
     public Vector3 backgroundOffset = Vector3.zero;
+
+    [Header("Events")]
+    public UnityEvent OnEnded;
 
     Coroutine previewRoutine;
     bool isEndingEarly = false;
@@ -354,7 +358,6 @@ public class LevelPreview : MonoBehaviour
         yield return FadeAllSegmentsOut(fadeOutDuration);
         // if(isEndingEarly)
         //   yield break;
-
     }
 
     Vector3[] GetSegmentPositions(Vector3[] baseVerts, Vector3 offset)
@@ -628,8 +631,8 @@ public class LevelPreview : MonoBehaviour
 
         // Hide preview in scene
         yield return null;  // final frame
+        OnEnded.Invoke();
         gameObject.SetActive(false);  // disable render/Update calls
-
     }
 
     IEnumerator StartTracerPath()

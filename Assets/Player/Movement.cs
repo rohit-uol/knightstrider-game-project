@@ -15,7 +15,7 @@ namespace TheMasterPath
         public event Action<Vector2, Vector2> StepEnded;
         public event Action<Vector2> TurnBack;
 
-        public bool EnableInput { get; set; } = true;
+        public bool EnableInput { get; set; } = false;
 
         [SerializeField]
         Tilemap masterPathTilemap;
