@@ -14682,6 +14682,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3370999134348095773, guid: c320ab598dc77524ca2dc61c461ffe29, type: 3}
+      propertyPath: m_Volume
+      value: 0.843
+      objectReference: {fileID: 0}
     - target: {fileID: 3832586727291103157, guid: c320ab598dc77524ca2dc61c461ffe29, type: 3}
       propertyPath: m_Name
       value: SFX
@@ -14730,6 +14734,10 @@ PrefabInstance:
       propertyPath: movement
       value: 
       objectReference: {fileID: 1911122677}
+    - target: {fileID: 8590771396463314561, guid: c320ab598dc77524ca2dc61c461ffe29, type: 3}
+      propertyPath: clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 33ed5f2fd790310438f8e1746427335b, type: 3}
     - target: {fileID: 8590771396463314561, guid: c320ab598dc77524ca2dc61c461ffe29, type: 3}
       propertyPath: movement
       value: 
