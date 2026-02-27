@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using TheMasterPath.Utilities;
 
 public class TeleportZone : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class TeleportZone : MonoBehaviour
         if (obj.TryGetComponent<TheMasterPath.Movement>(out var movement))
         {
             movement.Teleport(exitPoint.position);
+            int currentQuadrant = NavigationUtils.GetQuadrant(transform.position);
+            MapDestroyer.Instance.HideQuadrant(currentQuadrant);
         }
         else
         {
