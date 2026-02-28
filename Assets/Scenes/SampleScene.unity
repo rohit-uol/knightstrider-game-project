@@ -148,13 +148,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 455e76ca5f4305242a2b5c24ab76a0d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelPreview
+  persistentTextPrefab: {fileID: 1513004687749731330, guid: 103a6cf6174662c4ba569b3589388d51, type: 3}
+  persistentTextLocalPos: {x: 0, y: 0, z: -1}
+  persistentTextLocalScale: {x: 2, y: 4, z: 1}
   introTextPrefab: {fileID: 1513004687749731330, guid: eedc386f60f94024fb579bc6f3e20de0, type: 3}
   introTextTMP: {fileID: 0}
   introTextInstance: {fileID: 0}
-  introTextOffset: {x: 9.5, y: 0, z: 0}
+  introTextOffset: {x: 0, y: 0, z: 0}
   introFadeInDuration: 1
-  introHoldDuration: 4
+  introHoldDuration: 3
   introFadeOutDuration: 1
+  tracerInstructionText: Buttons WASD to move the Knight
+  tracerInstructionTextOffset: {x: 0, y: -6, z: -1}
+  instructionFadeIn: 0.4
+  instructionHold: 2.5
+  instructionFadeOut: 0.4
   polygonData: {fileID: 11400000, guid: a584d5d9c21a0fd4c84933a7ad4ad280, type: 2}
   q1VertexCount: 0
   fullPolygonRenderer: {fileID: 0}
@@ -162,7 +170,7 @@ MonoBehaviour:
   segmentWidth: 0.3
   fadeInDuration: 0.5
   moveDuration: 0.75
-  pauseBetweenSteps: 0.2
+  pauseBetweenSteps: 0.5
   fadeOutDelay: 0.5
   fadeOutDuration: 0.75
   q2RotateDuration: 0.75
@@ -176,6 +184,7 @@ MonoBehaviour:
   tracerSpeed: 12
   tracerInstance: {fileID: 0}
   tracerSR: {fileID: 0}
+  tracerRevealFadeDuration: 0.25
   backgroundPrefab: {fileID: 6638566385129559422, guid: 568853f297940744daa83bbc7ef7b1ed, type: 3}
   backgroundInstance: {fileID: 0}
   backgroundOffset: {x: 0, y: 0, z: 0}
