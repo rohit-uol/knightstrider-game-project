@@ -5,14 +5,12 @@ using TMPro;
 
 public class LevelLoader : MonoBehaviour
 {
-    public Animator transition;   // Animator for fade effect
-    public string nextLevelName;  // Name of the next scene
+    public Animator transition;
+    public string nextLevelName;
     public TextMeshProUGUI timeText;
     public float waitTime = 1f;
-
     private AudioSource source;
     private bool hasPlayed = false;
-
 
     void Awake()
     {
@@ -23,14 +21,19 @@ public class LevelLoader : MonoBehaviour
     {
         if (!other.CompareTag("playerTrigger")) return;
         if (hasPlayed) return;
-
         hasPlayed = true;
-
         Debug.Log("Player stepped on Final Tile!");
 
-        source?.Play();
+        // Disable movement immediately
+        var player = GameObject.FindWithTag("playerTrigger");
+        if (player != null)
+        {
+            var movement = player.GetComponent<TheMasterPath.Movement>();
+            if (movement != null)
+                movement.EnableInput = false;
+        }
 
-        // Start fade + scene change
+        source?.Play();
         StartCoroutine(LoadLevel(nextLevelName));
     }
 
@@ -38,10 +41,8 @@ public class LevelLoader : MonoBehaviour
     {
         timeText.enabled = true;
         timeText.SetText($"TIME\n{Time.realtimeSinceStartup:00:00}");
-        transition.SetTrigger("fade");  // Capital S
-
-        yield return new WaitForSeconds(waitTime); // Capital W
-
+        transition.SetTrigger("fade");
+        yield return new WaitForSeconds(waitTime);
         SceneManager.LoadScene(levelName);
     }
 }

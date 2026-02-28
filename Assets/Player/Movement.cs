@@ -5,6 +5,7 @@ using UnityEngine.Tilemaps;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using TheMasterPath.Utilities;
 
 namespace TheMasterPath
 {
@@ -29,12 +30,11 @@ namespace TheMasterPath
         [Tooltip("How fast the tilemap fades (higher is faster)")]
         [SerializeField] float fadeSpeed = 5f;
         [Range(0f, 1f)]
-        [SerializeField] float hiddenAlpha = 0.2f; // Not fully invisible, but transparent
+        [SerializeField] float hiddenAlpha = 0.2f;
 
         [SerializeField]
         Collider2D triggerCollider;
 
-        // Store original alphas here
         private Dictionary<Tilemap, float> originalAlphas = new Dictionary<Tilemap, float>();
 
         /// <summary>
@@ -58,6 +58,8 @@ namespace TheMasterPath
         Rigidbody2D rb;
         Animator anim;
 
+        [SerializeField] LayerMask wallLayer;
+
         Vector2 input = Vector2.zero;
         bool isMoving = false;
 
@@ -70,12 +72,12 @@ namespace TheMasterPath
         /// The initial position of a step.
         /// </summary>
         Vector2 stepStart = Vector2.zero;
-        
+
         /// <summary>
         /// The target position of a step.
         /// </summary>
         Vector2 stepEnd = Vector2.zero;
-        
+
         /// <summary>
         /// Did the player move already? (reset when a key is released)
         /// </summary>
@@ -85,10 +87,8 @@ namespace TheMasterPath
         {
             rb = GetComponent<Rigidbody2D>();
 
-            // Search children for the Animator component
             anim = GetComponentInChildren<Animator>();
 
-            // Capture the starting alpha values
             CaptureAlpha(hideableTilemap1);
             CaptureAlpha(hideableTilemap2);
             CaptureAlpha(hideableTilemap3);
@@ -101,16 +101,12 @@ namespace TheMasterPath
 
         void Update()
         {
-            // Always update animation state
             UpdateAnimationParameters();
 
             if (EnableInput)
             {
                 CheckInput();
             }
-
-            // Handle the transparency transitions
-            // UpdateTilemapFading();
         }
 
         void FixedUpdate()
@@ -125,7 +121,6 @@ namespace TheMasterPath
         {
             input = value.Get<Vector2>();
 
-            // don't allow diagonal movement
             if (!Mathf.Approximately(input.y, 0f))
             {
                 input.x = 0;
@@ -150,10 +145,8 @@ namespace TheMasterPath
         public void Teleport(Vector2 position)
         {
             isMoving = false;
-            stepTimer = 0f; // Reset the timer
+            stepTimer = 0f;
 
-            // Crucial: Update these so if CheckPath() runs, 
-            // it thinks we are already "at" the destination.
             rb.position = position;
             transform.position = position;
             stepStart = position;
@@ -164,20 +157,43 @@ namespace TheMasterPath
         /// Checks input and initiates movement if possible.
         /// </summary>
         void CheckInput()
-        {
-            if (input.magnitude > 0f && !isMoving && !didMove)
-            {
-                MoveTo(rb.position + input.normalized * stepSize);
-            }
+{
+    // Block input if fade animations are playing
+    if (anim != null)
+    {
+        AnimatorStateInfo state = anim.GetCurrentAnimatorStateInfo(0);
+        if ((state.IsName("fadestart") || state.IsName("fadeend")) && state.normalizedTime < 1f)
+            return;
+    }
 
-            if (didMove && input.magnitude <= 0f && !isMoving)
-            {
-                didMove = false;
-            }
+    if (input.magnitude > 0f && !isMoving && !didMove)
+    {
+        Vector2 targetPosition = rb.position + input.normalized * stepSize;
+
+        // Check for walls
+        Collider2D hit = Physics2D.OverlapCircle(targetPosition, 0.2f, wallLayer);
+
+        // Check for blocked quadrant transitions
+        int currentQuadrant = NavigationUtils.GetQuadrant(rb.position);
+        int targetQuadrant = NavigationUtils.GetQuadrant(targetPosition);
+
+        bool blockedTransition = (currentQuadrant == 1 && targetQuadrant == 4) ||
+                                 (currentQuadrant == 4 && targetQuadrant == 1);
+
+        if (hit == null && !blockedTransition)
+        {
+            MoveTo(targetPosition);
         }
+    }
+
+    if (didMove && input.magnitude <= 0f && !isMoving)
+    {
+        didMove = false;
+    }
+}
 
         /// <summary>
-        /// Moves the rigibody from one point to another over time.
+        /// Moves the rigidbody from one point to another over time.
         /// A single move is called a "step".
         /// </summary>
         void MoveRigidbody()
@@ -228,7 +244,7 @@ namespace TheMasterPath
         }
 
         /// <summary>
-        /// Called when the players stops moving.
+        /// Called when the player stops moving.
         /// </summary>
         void OnStepEnded()
         {
@@ -254,19 +270,14 @@ namespace TheMasterPath
         void UpdateAnimationParameters()
         {
             if (anim == null) return;
-            
-            // Logic: Moving if we haven't reached target yet OR if we are pushing a key
-            bool isMovingNow = Vector2.Distance(rb.position, stepEnd) > 0.05f || input.magnitude > 0.1f;
 
-            //anim.SetBool("isMoving", isMovingNow);
+            bool isMovingNow = Vector2.Distance(rb.position, stepEnd) > 0.05f || input.magnitude > 0.1f;
 
             if (input.magnitude > 0.1f)
             {
                 anim.SetFloat("MoveX", input.x);
                 anim.SetFloat("MoveY", input.y);
 
-                // Flip the CHILD object (the sprite) based on X direction
-                // We use anim.transform so we only flip the sprite, not the parent logic
                 if (input.x < 0) anim.transform.localScale = new Vector3(-1, 1, 1);
                 else if (input.x > 0) anim.transform.localScale = new Vector3(1, 1, 1);
             }
@@ -285,21 +296,13 @@ namespace TheMasterPath
         void HandleFade(Tilemap map)
         {
             if (map == null || !originalAlphas.ContainsKey(map)) return;
-            // 1. Get the player's current position in World Space
+
             Vector3 playerPos = rb.position;
-
-            // 2. Convert that exact world point to the Tilemap's local Grid coordinate
-            // Note: If your tiles are small, you might want to use rb.worldCenter 
-            // to check the middle of the player instead of their feet.
             Vector3Int cellPos = map.WorldToCell(playerPos);
-
-            // 3. Check if a tile exists at that coordinate
             bool isOverlapping = map.HasTile(cellPos);
 
-            // 4. Determine target alpha
             float targetAlpha = isOverlapping ? hiddenAlpha : originalAlphas[map];
 
-            // 5. Apply the Lerp/MoveTowards
             Color currentColor = map.color;
             if (!Mathf.Approximately(currentColor.a, targetAlpha))
             {
@@ -315,7 +318,5 @@ namespace TheMasterPath
                 originalAlphas[map] = map.color.a;
             }
         }
-
     }
-
-    }
+}
