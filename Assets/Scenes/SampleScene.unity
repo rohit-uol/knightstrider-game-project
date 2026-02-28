@@ -5526,11 +5526,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1133787340}
-  - component: {fileID: 1133787339}
   - component: {fileID: 1133787338}
   - component: {fileID: 1133787337}
+  - component: {fileID: 1133787339}
   m_Layer: 0
-  m_Name: Audio Source
+  m_Name: win  audio source
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5586,7 +5586,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.016494513, y: 0.008247256}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -5596,7 +5596,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.34022188, y: 0.3567164}
   m_EdgeRadius: 0
 --- !u!82 &1133787339
 AudioSource:
@@ -5609,8 +5609,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_Resource: {fileID: 8300000, guid: 3bf83879476d07a4b8e4210383258606, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -5704,7 +5704,7 @@ Transform:
   m_GameObject: {fileID: 1133787336}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.45, y: -0.52, z: 0}
+  m_LocalPosition: {x: -5.48, y: -0.47, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14129,6 +14129,10 @@ PrefabInstance:
       propertyPath: m_UseFullKinematicContacts
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 447970502458153723, guid: 842d3918a01c61f4cb568db9a8dcfa61, type: 3}
+      propertyPath: deathSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 19ae79b6d5741794482e135969eb0ea6, type: 3}
     - target: {fileID: 447970502458153723, guid: 842d3918a01c61f4cb568db9a8dcfa61, type: 3}
       propertyPath: resetPoints
       value: 

@@ -9,12 +9,12 @@ namespace TheMasterPath
     {
         [SerializeField]
         ResetPoints resetPoints;
-
         [SerializeField]
         float animationTime;
-
         [SerializeField]
         Animator playerAnimator;
+        [SerializeField]
+        AudioClip deathSound;
 
         /// <summary>
         /// The current health value.
@@ -23,11 +23,13 @@ namespace TheMasterPath
         public int Value { get; private set; } = 5;
 
         Movement movement;
+        AudioSource audioSource;
 
         void Start()
         {
             movement = GetComponent<Movement>();
             movement.TurnBack += OnTurnBack;
+            audioSource = GetComponent<AudioSource>();
         }
 
         /// <summary>
@@ -37,12 +39,15 @@ namespace TheMasterPath
         {
             Value -= 1;
             playerAnimator.SetTrigger("death");
+
+            if (Value <= 0 && deathSound != null)
+                AudioSource.PlayClipAtPoint(deathSound, Camera.main.transform.position);
+
             StartCoroutine(WaitForAnimation(() =>
             {
                 if (Value > 0)
                 {
                     movement.MoveTo(resetPoints.Get(transform.position));
-
                     StartCoroutine(WaitForTurnBack(() =>
                     {
                         movement.EnableInput = true;
@@ -50,7 +55,8 @@ namespace TheMasterPath
                 }
                 else
                 {
-                    ReloadScene();
+                    float remainingDelay = deathSound != null ? deathSound.length - animationTime : 0f;
+                    StartCoroutine(DelayedReload(Mathf.Max(0f, remainingDelay)));
                 }
             }));
         }
@@ -73,6 +79,12 @@ namespace TheMasterPath
         void ReloadScene()
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+        IEnumerator DelayedReload(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            ReloadScene();
         }
     }
 }
