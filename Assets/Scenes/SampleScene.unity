@@ -188,6 +188,21 @@ MonoBehaviour:
   backgroundPrefab: {fileID: 6638566385129559422, guid: 568853f297940744daa83bbc7ef7b1ed, type: 3}
   backgroundInstance: {fileID: 0}
   backgroundOffset: {x: 0, y: 0, z: 0}
+  OnEnded:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1911122677}
+        m_TargetAssemblyTypeName: TheMasterPath.Movement, Assembly-CSharp
+        m_MethodName: set_EnableInput
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!4 &4718155
 Transform:
   m_ObjectHideFlags: 0

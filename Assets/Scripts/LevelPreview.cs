@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 using TMPro;
 
 
@@ -78,6 +79,8 @@ public class LevelPreview : MonoBehaviour
     public GameObject backgroundPrefab;
     [HideInInspector] public Transform backgroundInstance;
     public Vector3 backgroundOffset = Vector3.zero;
+
+    public UnityEvent OnEnded;
 
     Coroutine previewRoutine;
     bool isEndingEarly = false;
@@ -616,6 +619,7 @@ public class LevelPreview : MonoBehaviour
 
         // Hide preview in scene
         yield return null;  // final frame
+        OnEnded.Invoke();
         gameObject.SetActive(false);  // disable render/Update calls
 
     }
