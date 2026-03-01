@@ -15,11 +15,6 @@ namespace TheMasterPath
 
         void Start()
         {
-            if (!Application.isEditor || showInEditor)
-            {
-                ui.SetActive(true);
-            }
-
             inputActions.FindAction(HELP_ACTION_NAME).Enable();
             inputActions.FindAction(HELP_ACTION_NAME).performed += OnHelp;
         }
