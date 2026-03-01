@@ -176,7 +176,7 @@ namespace TheMasterPath
         // Check for blocked quadrant transitions
         int currentQuadrant = NavigationUtils.GetQuadrant(rb.position);
         int targetQuadrant = NavigationUtils.GetQuadrant(targetPosition);
-
+        
         bool blockedTransition = (currentQuadrant == 1 && targetQuadrant == 4) ||
                                  (currentQuadrant == 4 && targetQuadrant == 1);
 

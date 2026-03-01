@@ -5,7 +5,7 @@ namespace TheMasterPath.Utilities
     public static class NavigationUtils
     {
 
-        private static readonly Vector2 _center = new Vector2(0f, 0.5f);
+        private static readonly Vector2 _center = new Vector2(0f, 0f);
 
         /// <summary>
         /// Returns the quadrant (1-4) moving CLOCKWISE.

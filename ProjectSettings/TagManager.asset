@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 3
   tags:
   - playerTrigger
+  - Q1
+  - Q2
+  - Q3
+  - Q4
   layers:
   - Default
   - TransparentFX
