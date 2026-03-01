@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -88.2634}
-  m_SizeDelta: {x: -60, y: 321.7366}
+  m_AnchoredPosition: {x: 0, y: -118.2634}
+  m_SizeDelta: {x: -120, y: 321.7366}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &4424658892417399450
 CanvasRenderer:
@@ -65,25 +65,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '<i>Stay on the master path or face ruination! Remember the repeating pattern
-    to work out the secret path.</i>
-
-
-    How to play?
-
-
-    1. Your goal is to
-    walk through all four quadrants of the map.
-
-    2. Move through the first quadrant
-    and remember the pattern.
-
-    3. The correct path rotates by 90 degrees in each
-    quadrant.
-
-    4. Try to figure out the correct path while it''s invisible.
-
-'
+  m_text: "<b>The Master Path</b>\nMemorize the path shown in the first zone of the
+    Labyrinthine City.\n\n<b>The 90-Degree Rule</b>\nThe path remains identical in
+    every zone but <b>rotates 90 degrees clockwise</b> as you move into each new
+    quadrant.\n\n<b>Close the Loop</b>\nUse spatial reasoning to navigate all four
+    zones. Completing the full square circuit breaks the sorcerer\u2019s spell.\n\n<b>Avoid
+    Reality Collapse</b>\nStay strictly on the hidden path using <b>WASD</b>. Stepping
+    into the abyss will trigger a \"reality collapse\" and reset your progress."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -110,8 +98,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 15
-  m_fontSizeBase: 15
+  m_fontSize: 18
+  m_fontSizeBase: 18
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -193,7 +181,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 500, y: 500}
+  m_SizeDelta: {x: 700, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &723773613310957883
 CanvasRenderer:
@@ -267,7 +255,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -25}
+  m_AnchoredPosition: {x: 0, y: -60}
   m_SizeDelta: {x: 0, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &1767126830445522643
@@ -298,10 +286,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'The Master Path: Playtest 1'
+  m_text: How To Play ?
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5a2b5486ae566b946968686cfa09fc5b, type: 2}
+  m_sharedMaterial: {fileID: 7784931368958568835, guid: 5a2b5486ae566b946968686cfa09fc5b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -325,8 +313,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -437,8 +425,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Play
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5a2b5486ae566b946968686cfa09fc5b, type: 2}
+  m_sharedMaterial: {fileID: 7784931368958568835, guid: 5a2b5486ae566b946968686cfa09fc5b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -462,13 +450,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 19
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -596,7 +584,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 60}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 200, y: 40}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &8759560747805786348
 CanvasRenderer:
