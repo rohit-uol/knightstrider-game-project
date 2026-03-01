@@ -15261,6 +15261,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2048001647}
     m_Modifications:
+    - target: {fileID: 182383066771873310, guid: ce1b2c84ccefa374787d1c62a2148e14, type: 3}
+      propertyPath: m_text
+      value: How To Play ?
+      objectReference: {fileID: 0}
     - target: {fileID: 1138074205484970265, guid: ce1b2c84ccefa374787d1c62a2148e14, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -15340,6 +15344,25 @@ PrefabInstance:
     - target: {fileID: 1138074205484970265, guid: ce1b2c84ccefa374787d1c62a2148e14, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3381331621216345205, guid: ce1b2c84ccefa374787d1c62a2148e14, type: 3}
+      propertyPath: m_text
+      value: "<b>The Master Path</b>\nMemorize the path shown in the first zone of
+        the Labyrinthine City.\n\n<b>The 90-Degree Rule</b>\nThe path remains identical
+        in every zone but <b>rotates 90 degrees clockwise</b> as you move into each
+        new quadrant.\n\n<b>Close the Loop</b>\nUse spatial reasoning to navigate
+        all four zones. Completing the full square circuit breaks the sorcerer\u2019s
+        spell.\n\n<b>Avoid Reality Collapse</b>\nStay strictly on the hidden path
+        using <b>WASD</b>. Stepping into the abyss will trigger a \"reality collapse\"
+        and reset your progress."
+      objectReference: {fileID: 0}
+    - target: {fileID: 3381331621216345205, guid: ce1b2c84ccefa374787d1c62a2148e14, type: 3}
+      propertyPath: m_isRightToLeft
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3381331621216345205, guid: ce1b2c84ccefa374787d1c62a2148e14, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
       objectReference: {fileID: 0}
     - target: {fileID: 8552350622531435229, guid: ce1b2c84ccefa374787d1c62a2148e14, type: 3}
       propertyPath: m_Name
