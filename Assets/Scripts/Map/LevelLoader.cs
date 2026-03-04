@@ -3,46 +3,53 @@ using UnityEngine.SceneManagement;
 using System.Collections;
 using TMPro;
 
-public class LevelLoader : MonoBehaviour
+namespace TheMasterPath
 {
-    public Animator transition;
-    public string nextLevelName;
-    public TextMeshProUGUI timeText;
-    public float waitTime = 1f;
-    private AudioSource source;
-    private bool hasPlayed = false;
-
-    void Awake()
+    public class LevelLoader : MonoBehaviour
     {
-        source = GetComponent<AudioSource>();
-    }
+        public Animator transition;
+        public string nextLevelName;
+        public TextMeshProUGUI timeText;
+        public float waitTime = 1f;
+        private AudioSource source;
+        private bool hasPlayed = false;
+        public Timer timer;
+        public string lastLevelName;
+        public TextMeshProUGUI additionalText;
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (!other.CompareTag("playerTrigger")) return;
-        if (hasPlayed) return;
-        hasPlayed = true;
-        Debug.Log("Player stepped on Final Tile!");
-
-        // Disable movement immediately
-        var player = GameObject.FindWithTag("playerTrigger");
-        if (player != null)
+        void Awake()
         {
-            var movement = player.GetComponent<TheMasterPath.Movement>();
-            if (movement != null)
-                movement.EnableInput = false;
+            source = GetComponent<AudioSource>();
         }
 
-        source?.Play();
-        StartCoroutine(LoadLevel(nextLevelName));
-    }
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (!other.CompareTag("playerTrigger")) return;
+            if (hasPlayed) return;
+            hasPlayed = true;
+            Debug.Log("Player stepped on Final Tile!");
 
-    IEnumerator LoadLevel(string levelName)
-    {
-        timeText.enabled = true;
-        timeText.SetText($"TIME\n{Time.realtimeSinceStartup:00:00}");
-        transition.SetTrigger("fade");
-        yield return new WaitForSeconds(waitTime);
-        SceneManager.LoadScene(levelName);
+            // Disable movement immediately
+            var player = GameObject.FindWithTag("playerTrigger");
+            if (player != null)
+            {
+                var movement = player.GetComponent<TheMasterPath.Movement>();
+                if (movement != null)
+                    movement.EnableInput = false;
+            }
+
+            source?.Play();
+            StartCoroutine(LoadLevel(nextLevelName));
+        }
+
+        IEnumerator LoadLevel(string levelName)
+        {
+            timeText.enabled = true;
+            additionalText.enabled = true;
+            timeText.SetText($"TIME\n{timer.PlayTime:00:00}");
+            transition.SetTrigger("fade");
+            yield return new WaitForSeconds(waitTime);
+            SceneManager.LoadScene(levelName);
+        }
     }
 }
