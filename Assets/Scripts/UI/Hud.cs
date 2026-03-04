@@ -30,6 +30,9 @@ namespace TheMasterPath
         [SerializeField]
         Health health;
 
+        [SerializeField]
+        Timer timer;
+
         void Start()
         {
             UpdateLevelText();
@@ -63,7 +66,7 @@ namespace TheMasterPath
 
         void UpdateTimeText()
         {
-            timeText.SetText(GetLimitedValue(Time.realtimeSinceStartup).ToString("00"));
+            timeText.SetText(GetLimitedValue(timer.PlayTime).ToString("00"));
         }
 
         float GetLimitedValue(float value)

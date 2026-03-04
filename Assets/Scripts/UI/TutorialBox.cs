@@ -6,7 +6,6 @@ namespace TheMasterPath
     public class TutorialBox : MonoBehaviour
     {
         [SerializeField] GameObject ui;
-        [SerializeField] bool showInEditor = false;
         [SerializeField] InputActionAsset inputActions;
 
         const string HELP_ACTION_NAME = "UI/Help";
