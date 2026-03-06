@@ -309,10 +309,6 @@ public class LevelPreview : MonoBehaviour
 
         yield return new WaitForSeconds(pauseBetweenSteps);
 
-        // Try exactly 1.5 if the shift is purely vertical
-        Vector3 pivotOffset = new Vector3(0, -1.5f, 0);
-
-
         // 1. Q2: slide from Q1 → rotate 90 degs right
         InitSegment(segQ2, q1SegmentReversed, offsetQ1);
         SetLineAlpha(segQ2, 1f);
@@ -320,7 +316,8 @@ public class LevelPreview : MonoBehaviour
         yield return new WaitForSeconds(pauseBetweenSteps);
         Vector3[] q2Pos = new Vector3[segQ2.positionCount];
         segQ2.GetPositions(q2Pos);
-        Vector3 q2Center = GetBoundsCenter(q2Pos) + pivotOffset;
+        // Same pivot strategy as Q3/Q4: diagonal midpoint (first ↔ last vertex)
+        Vector3 q2Center = (q2Pos[0] + q2Pos[q2Pos.Length - 1]) * 0.5f;
         yield return DiscreteRotate(segQ2, q2Pos, q2Center, -90f, q2RotateDuration);
 
         yield return new WaitForSeconds(pauseBetweenSteps);
