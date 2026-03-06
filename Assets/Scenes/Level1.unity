@@ -149,20 +149,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelPreview
   persistentTextPrefab: {fileID: 1513004687749731330, guid: 103a6cf6174662c4ba569b3589388d51, type: 3}
-  persistentTextLocalPos: {x: 0, y: 0, z: -1}
-  persistentTextLocalScale: {x: 2, y: 4, z: 1}
+  persistentTextLocalPos: {x: 0, y: 6, z: -1}
+  persistentTextLocalScale: {x: 2, y: 2, z: 1}
   introTextPrefab: {fileID: 1513004687749731330, guid: eedc386f60f94024fb579bc6f3e20de0, type: 3}
   introTextTMP: {fileID: 0}
   introTextInstance: {fileID: 0}
-  introTextOffset: {x: 0, y: 0, z: 0}
-  introFadeInDuration: 1
-  introHoldDuration: 3
+  introTextOffset: {x: 0, y: -5, z: 0}
+  introFadeInDuration: 3
+  introHoldDuration: 5
   introFadeOutDuration: 1
-  tracerInstructionText: Buttons WASD to move the Knight
-  tracerInstructionTextOffset: {x: 0, y: -6, z: -1}
-  instructionFadeIn: 0.4
-  instructionHold: 2.5
-  instructionFadeOut: 0.4
+  tracerInstructionText: Example text
+  tracerInstructionTextOffset: {x: 0, y: -7, z: -1}
+  instructionFadeIn: 2
+  instructionHold: 5
+  instructionFadeOut: 1
   polygonData: {fileID: 11400000, guid: a584d5d9c21a0fd4c84933a7ad4ad280, type: 2}
   q1VertexCount: 0
   fullPolygonRenderer: {fileID: 0}
@@ -2756,27 +2756,43 @@ MonoBehaviour:
   size: 9
   closePolygon: 1
   fullVertices:
-  - {x: -5, y: 0, z: 0}
-  - {x: -5, y: 8, z: 0}
-  - {x: -3, y: 8, z: 0}
-  - {x: -3, y: 5, z: 0}
-  - {x: 0, y: 5, z: 0}
-  - {x: 0.00000021855695, y: 5, z: 0}
-  - {x: 8, y: 4.9999995, z: 0}
-  - {x: 8, y: 2.9999998, z: 0}
-  - {x: 5, y: 2.9999998, z: 0}
-  - {x: 5, y: -0.00000021855695, z: 0}
-  - {x: 5, y: 0.0000004371139, z: 0}
-  - {x: 5.0000005, y: -7.9999995, z: 0}
-  - {x: 3.0000007, y: -7.9999995, z: 0}
-  - {x: 3.0000005, y: -4.9999995, z: 0}
-  - {x: 0.0000004371139, y: -5, z: 0}
-  - {x: -0.000000059624405, y: -5, z: 0}
-  - {x: -8, y: -5, z: 0}
-  - {x: -8, y: -3, z: 0}
-  - {x: -5, y: -3, z: 0}
-  - {x: -5, y: 0.000000059624405, z: 0}
-  - {x: -5, y: 0, z: 0}
+  - {x: -8, y: 0, z: 0}
+  - {x: -8, y: 8, z: 0}
+  - {x: -6, y: 8, z: 0}
+  - {x: -6, y: 2, z: 0}
+  - {x: -2, y: 2, z: 0}
+  - {x: -2, y: 4, z: 0}
+  - {x: -4, y: 4, z: 0}
+  - {x: -4, y: 8, z: 0}
+  - {x: 0, y: 8, z: 0}
+  - {x: 0.0000003496911, y: 8, z: 0}
+  - {x: 8, y: 7.9999995, z: 0}
+  - {x: 8, y: 5.9999995, z: 0}
+  - {x: 2.0000002, y: 6, z: 0}
+  - {x: 2, y: 1.9999999, z: 0}
+  - {x: 4, y: 1.9999999, z: 0}
+  - {x: 4, y: 3.9999998, z: 0}
+  - {x: 8, y: 3.9999998, z: 0}
+  - {x: 8, y: -0.0000003496911, z: 0}
+  - {x: 8, y: 0.0000006993822, z: 0}
+  - {x: 8.000001, y: -7.9999995, z: 0}
+  - {x: 6.0000005, y: -7.9999995, z: 0}
+  - {x: 6, y: -1.9999995, z: 0}
+  - {x: 2.0000002, y: -1.9999999, z: 0}
+  - {x: 2.0000002, y: -3.9999998, z: 0}
+  - {x: 4.0000005, y: -3.9999998, z: 0}
+  - {x: 4.0000005, y: -7.9999995, z: 0}
+  - {x: 0.0000006993822, y: -8, z: 0}
+  - {x: -0.000000095399045, y: -8, z: 0}
+  - {x: -8, y: -8, z: 0}
+  - {x: -8, y: -6, z: 0}
+  - {x: -2, y: -6, z: 0}
+  - {x: -2, y: -2, z: 0}
+  - {x: -4, y: -2, z: 0}
+  - {x: -4, y: -4, z: 0}
+  - {x: -8, y: -4, z: 0}
+  - {x: -8, y: 0.000000095399045, z: 0}
+  - {x: -8, y: 0, z: 0}
   lineRenderer: {fileID: 0}
 --- !u!4 &534092351
 Transform:

@@ -26,7 +26,7 @@ public class LevelPreview : MonoBehaviour
     public float introFadeOutDuration = 1f;
 
     [Header("Instruction Text")]
-    public string tracerInstructionText = "Buttons WASD to move the Knight";
+    public string tracerInstructionText = "WASSSSSD to move the Knight <br> Around The Master Path <br> Clockwise Direction <br> One circuit";
     public Vector3 tracerInstructionTextOffset = new Vector3(0f, -6f, -1f);
     public float instructionFadeIn = 0.4f;
     public float instructionHold = 1.2f;
@@ -671,7 +671,7 @@ public class LevelPreview : MonoBehaviour
         SetLineAlpha(segQ4, 0f);
 
         yield return StartCoroutine(ShowInstructionText(
-     "Buttons WASD to move the knight",
+     "WASD to move the Knight <br> Around The Master Path <br> One lap in clockwise direction",
      tracerInstructionTextOffset,
      instructionFadeIn,
      instructionHold,
