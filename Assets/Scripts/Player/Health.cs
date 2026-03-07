@@ -15,6 +15,8 @@ namespace TheMasterPath
         Animator playerAnimator;
         [SerializeField]
         AudioClip deathSound;
+        [SerializeField]
+        Animator gameOver;
 
         /// <summary>
         /// The current health value.
@@ -88,15 +90,17 @@ namespace TheMasterPath
         /// <summary>
         /// Loads the currently active scene again.
         /// </summary>
-        void ReloadScene()
+        void LoadMenu()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene("Menu");
         }
 
         IEnumerator DelayedReload(float delay)
         {
-            yield return new WaitForSeconds(delay);
-            ReloadScene();
+            gameOver.GetComponent<Canvas>().enabled = true;
+            gameOver.SetTrigger("fade");
+            yield return new WaitForSeconds(animationTime * 3f);
+            LoadMenu();
         }
     }
 }
