@@ -34,7 +34,13 @@ Material:
     m_Ints: []
     m_Floats:
     - _DissolveAmount: 0
+    - _EdgeWidth: 0.12
+    - _FlickerAmount: 0.2
+    - _FlickerSpeed: 12
+    - _GlowIntensity: 2.5
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _CoreColor: {r: 1, g: 0.95, b: 0.39999998, a: 1}
+    - _RimColor: {r: 1, g: 0.14999998, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

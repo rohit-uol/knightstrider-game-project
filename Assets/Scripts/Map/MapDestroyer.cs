@@ -27,6 +27,12 @@ namespace TheMasterPath.Utilities
         [SerializeField] private AudioSource audioSource;
         [Tooltip("Assign Assets/SFX/Shatter/freesound_community-rock-smash-6304.mp3 or any clip.")]
         [SerializeField] private AudioClip dissolveClip;
+        [Tooltip("_DissolveAmount value where the ghost tile stops (0 = solid, 1 = fully gone). Default 0.85 leaves a crumbled look instead of revealing black.")]
+        [SerializeField, Range(0f, 1f)] private float dissolveStopAt = 0.85f;
+        [Tooltip("How fast the edge breathes after the dissolve completes (keeps fire flicker alive).")]
+        [SerializeField] private float edgeBreathSpeed = 4f;
+        [Tooltip("How much _DissolveAmount oscillates post-dissolve. Tiny value keeps the edge alive without visibly shifting.")]
+        [SerializeField] private float edgeBreathRange = 0.025f;
 
         // Use the center from our existing Utils or define here
         private Vector2 _center = new Vector2(10.5f, -5.0f);
@@ -172,17 +178,29 @@ namespace TheMasterPath.Utilities
         /// </summary>
         private System.Collections.IEnumerator RunDissolve(SpriteRenderer sr)
         {
-            Material mat     = sr.material; // instance copy — safe to mutate
+            Material mat      = sr.material; // instance copy — safe to mutate
             float    progress = 0f;
 
-            while (progress < 1f)
+            // Multiply by dissolveStopAt so the animation always takes the same
+            // wall-clock time (1/dissolveSpeed seconds) regardless of the stop value.
+            float scaledSpeed = dissolveSpeed * dissolveStopAt;
+
+            while (progress < dissolveStopAt)
             {
-                progress += Time.deltaTime * dissolveSpeed;
+                progress += Time.deltaTime * scaledSpeed;
                 mat.SetFloat("_DissolveAmount", Mathf.Clamp01(progress));
                 yield return null;
             }
 
-            Destroy(sr.gameObject);
+            // After dissolve settles: keep the coroutine alive with a tiny breath loop.
+            // This marks the material dirty every frame so Unity re-evaluates the shader,
+            // which in turn keeps the _Time-driven fire flicker running indefinitely.
+            while (true)
+            {
+                float breath = dissolveStopAt + Mathf.Sin(Time.time * edgeBreathSpeed) * edgeBreathRange;
+                mat.SetFloat("_DissolveAmount", Mathf.Clamp01(breath));
+                yield return null;
+            }
         }
     }
 }
