@@ -33,6 +33,18 @@ namespace TheMasterPath
         }
 
         /// <summary>
+        /// Called by external sources (e.g. arrow hits) to deal one point of damage
+        /// and trigger the same reset / reload flow as stepping off the path.
+        /// </summary>
+        public void TakeDamage()
+        {
+            // Ignore hits while already processing a death (input disabled)
+            if (!movement.EnableInput) return;
+            movement.EnableInput = false;
+            OnTurnBack(transform.position);
+        }
+
+        /// <summary>
         /// Called when the player is turned back.
         /// </summary>
         void OnTurnBack(Vector2 stepStart)

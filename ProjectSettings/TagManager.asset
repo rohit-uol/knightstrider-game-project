@@ -9,6 +9,9 @@ TagManager:
   - Q2
   - Q3
   - Q4
+  - Enemy
+  - PropsMap
+  - Arrow
   layers:
   - Default
   - TransparentFX
@@ -16,8 +19,8 @@ TagManager:
   - Player
   - Water
   - UI
-  - 
-  - 
+  - MapProps
+  - Arrow
   - 
   - 
   - 
