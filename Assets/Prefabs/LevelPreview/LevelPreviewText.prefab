@@ -113,13 +113,7 @@ MonoBehaviour:
     Remember the pattern
 
 
-    To solve the mystery of the Master Path!
-
-
-
-
-
-'
+    To solve the mystery of the Master Path!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5a2b5486ae566b946968686cfa09fc5b, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

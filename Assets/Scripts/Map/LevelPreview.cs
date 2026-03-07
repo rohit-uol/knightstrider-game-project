@@ -671,7 +671,7 @@ public class LevelPreview : MonoBehaviour
         SetLineAlpha(segQ4, 0f);
 
         yield return StartCoroutine(ShowInstructionText(
-     "WASD to move the Knight <br> Around The Master Path <br> One lap in clockwise direction",
+     "WASD to move the Knight <br><br> along The Master Path, <br><br> One wrong move may be your last!",
      tracerInstructionTextOffset,
      instructionFadeIn,
      instructionHold,

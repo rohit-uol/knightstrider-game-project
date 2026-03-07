@@ -149,20 +149,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelPreview
   persistentTextPrefab: {fileID: 1513004687749731330, guid: 103a6cf6174662c4ba569b3589388d51, type: 3}
-  persistentTextLocalPos: {x: 0, y: 0, z: -1}
-  persistentTextLocalScale: {x: 2, y: 4, z: 1}
+  persistentTextLocalPos: {x: 0, y: 6, z: -1}
+  persistentTextLocalScale: {x: 2, y: 2, z: 1}
   introTextPrefab: {fileID: 1513004687749731330, guid: eedc386f60f94024fb579bc6f3e20de0, type: 3}
   introTextTMP: {fileID: 0}
   introTextInstance: {fileID: 0}
-  introTextOffset: {x: 0, y: 0, z: 0}
+  introTextOffset: {x: 0, y: -5, z: 0}
   introFadeInDuration: 1
-  introHoldDuration: 3
+  introHoldDuration: 5
   introFadeOutDuration: 1
   tracerInstructionText: Buttons WASD to move the Knight
-  tracerInstructionTextOffset: {x: 0, y: -6, z: -1}
-  instructionFadeIn: 0.4
-  instructionHold: 2.5
-  instructionFadeOut: 0.4
+  tracerInstructionTextOffset: {x: 0, y: -7, z: -1}
+  instructionFadeIn: 2
+  instructionHold: 5
+  instructionFadeOut: 1
   polygonData: {fileID: 11400000, guid: 5c54f50c08e3347468e9ca7cbe677c03, type: 2}
   q1VertexCount: 0
   fullPolygonRenderer: {fileID: 0}
