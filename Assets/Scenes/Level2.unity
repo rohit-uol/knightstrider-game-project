@@ -10756,9 +10756,12 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   dissolvePrefab: {fileID: 5050648745073574249, guid: 8b183c2ef1b95a64eadd7b53ec82930d, type: 3}
-  dissolveSpeed: 1
+  dissolveSpeed: 0.5
   audioSource: {fileID: 455418434855135945}
   dissolveClip: {fileID: 8300000, guid: ea30e9f921ed1b944ad151bc38d9fd40, type: 3}
+  dissolveStopAt: 0.9
+  edgeBreathSpeed: 4
+  edgeBreathRange: 0.025
 --- !u!1001 &1278587212
 PrefabInstance:
   m_ObjectHideFlags: 0
