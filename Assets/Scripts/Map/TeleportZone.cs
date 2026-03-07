@@ -6,6 +6,7 @@ public class TeleportZone : MonoBehaviour
 {
     [SerializeField] private Transform exitPoint;
     private HashSet<GameObject> recentlyTeleported = new HashSet<GameObject>();
+    private bool _triggered = false;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -18,10 +19,14 @@ public class TeleportZone : MonoBehaviour
         if (obj.TryGetComponent<TheMasterPath.Movement>(out var movement))
         {
             movement.Teleport(exitPoint.position);
-            string parentTag = transform.parent != null ? transform.parent.tag : "";
-            if (parentTag.StartsWith("Q") && int.TryParse(parentTag.Substring(1), out int currentQuadrant))
+            if (!_triggered)
             {
-                MapDestroyer.Instance.HideQuadrant(currentQuadrant);
+                string parentTag = transform.parent != null ? transform.parent.tag : "";
+                if (parentTag.StartsWith("Q") && int.TryParse(parentTag.Substring(1), out int currentQuadrant))
+                {
+                    MapDestroyer.Instance.HideQuadrant(currentQuadrant);
+                }
+                _triggered = true;
             }
         }
         else
