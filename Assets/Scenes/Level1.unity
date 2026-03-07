@@ -156,7 +156,7 @@ MonoBehaviour:
   introTextInstance: {fileID: 0}
   introTextOffset: {x: 0, y: -5, z: 0}
   introFadeInDuration: 3
-  introHoldDuration: 5
+  introHoldDuration: 4
   introFadeOutDuration: 1
   tracerInstructionText: Example text
   tracerInstructionTextOffset: {x: 0, y: -7, z: -1}
@@ -168,14 +168,14 @@ MonoBehaviour:
   fullPolygonRenderer: {fileID: 0}
   lineMaterial: {fileID: 2100000, guid: e98e969bbb0487644891fc62a6d23cbb, type: 2}
   segmentWidth: 0.3
-  fadeInDuration: 0.5
-  moveDuration: 0.75
-  pauseBetweenSteps: 0.5
-  fadeOutDelay: 0.5
-  fadeOutDuration: 0.75
-  q2RotateDuration: 0.75
-  q3RotateDuration: 0.75
-  q4RotateDuration: 0.75
+  fadeInDuration: 0.6
+  moveDuration: 0.6
+  pauseBetweenSteps: 0.6
+  fadeOutDelay: 1
+  fadeOutDuration: 2
+  q2RotateDuration: 0.6
+  q3RotateDuration: 0.6
+  q4RotateDuration: 0.6
   offsetQ1: {x: 0, y: 0, z: 0}
   offsetQ2: {x: 5, y: 0, z: 0}
   offsetQ3: {x: 5, y: -5, z: 0}
@@ -184,7 +184,7 @@ MonoBehaviour:
   tracerSpeed: 12
   tracerInstance: {fileID: 0}
   tracerSR: {fileID: 0}
-  tracerRevealFadeDuration: 0.25
+  tracerRevealFadeDuration: 0.4
   backgroundPrefab: {fileID: 6638566385129559422, guid: 568853f297940744daa83bbc7ef7b1ed, type: 3}
   backgroundInstance: {fileID: 0}
   backgroundOffset: {x: 0, y: 0, z: 0}
