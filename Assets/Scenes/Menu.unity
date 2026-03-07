@@ -1406,7 +1406,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -118.2634}
-  m_SizeDelta: {x: -120, y: 321.7366}
+  m_SizeDelta: {x: -200, y: 321.7366}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &684300789973292463
 MonoBehaviour:
@@ -1530,7 +1530,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<b>Visual Assets</b>\n- \n<b>Audio Assets</b>\n-"
+  m_text: "<b>Visual Assets</b>\n- Jersey25, https://fonts.google.com/specimen/Jersey+25,
+    The Soft Type Project Authors\r\n- Pixel Art Top Down - Basic, https://assetstore-fallback.unity.com/packages/2d/environments/pixel-art-top-down-basic-187605,
+    Cainos\r\n- Tiny Swords, https://assetstore.unity.com/packages/2d/environments/tiny-swords-352566,
+    Pixel Frog\r\n \n<b>Audio Assets</b>\n- FX: The Ultimate 2017 16 bit Mini pack,
+    https://opengameart.org/content/sfx-the-ultimate-2017-16-bit-mini-pack, phoenix1291\r\n-
+    Park ambiences, https://opengameart.org/content/park-ambiences, Thimras\r\nLightmetal_armor,
+    https://freesound.org/people/mitchanary/sounds/506148/, mitchanary\r\n- Halloween
+    Night Waltz, https://pixabay.com/music/mystery-halloween-night-waltz-238151/,
+    HarumachiMusic\r\n- Different steps on wood, stone, leaves, gravel and mud, https://opengameart.org/content/different-steps-on-wood-stone-leaves-gravel-and-mud,
+    TinyWorlds"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1725,7 +1734,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 700, y: 700}
+  m_SizeDelta: {x: 1200, y: 700}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &6652072887391099692
 RectTransform:
