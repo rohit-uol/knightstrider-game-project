@@ -2,6 +2,7 @@
 using UnityEngine.SceneManagement;
 using System.Collections;
 using TMPro;
+using TheMasterPath.Utilities;
 
 namespace TheMasterPath
 {
@@ -11,6 +12,7 @@ namespace TheMasterPath
         public string nextLevelName;
         public TextMeshProUGUI timeText;
         public float waitTime = 1f;
+        [SerializeField] private float quadrantHideDelay = 1f;
         private AudioSource source;
         private bool hasPlayed = false;
         public Timer timer;
@@ -37,13 +39,14 @@ namespace TheMasterPath
                 if (movement != null)
                     movement.EnableInput = false;
             }
-
-            source?.Play();
+            MapDestroyer.Instance.HideQuadrant(4);            
             StartCoroutine(LoadLevel(nextLevelName));
         }
 
         IEnumerator LoadLevel(string levelName)
         {
+            yield return new WaitForSeconds(quadrantHideDelay);
+            source?.Play();
             timeText.enabled = true;
             additionalText.enabled = true;
             timeText.SetText($"TIME\n{timer.PlayTime:00:00}");
