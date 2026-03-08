@@ -72,7 +72,7 @@ Material:
     m_Colors:
     - White: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _GoldenAmberColor: {r: 1.8443025, g: 1.2946281, b: 0.5135116, a: 1}
+    - _GoldenAmberColor: {r: 1.4722267, g: 1.247226, b: 0.909725, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
