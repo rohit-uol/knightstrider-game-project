@@ -18,7 +18,8 @@ public class TeleportZone : MonoBehaviour
         // Check if the object has  Movement script
         if (obj.TryGetComponent<TheMasterPath.Movement>(out var movement))
         {
-            movement.Teleport(exitPoint.position);
+            if (exitPoint != null)
+                movement.Teleport(exitPoint.position);
             if (!_triggered)
             {
                 string parentTag = transform.parent != null ? transform.parent.tag : "";
@@ -36,7 +37,7 @@ public class TeleportZone : MonoBehaviour
         }
 
         TeleportZone exitZone;
-        if (exitPoint.TryGetComponent<TeleportZone>(out exitZone))
+        if (exitPoint != null && exitPoint.TryGetComponent<TeleportZone>(out exitZone))
         {
             exitZone.recentlyTeleported.Add(obj);
         }

@@ -3230,7 +3230,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 978722903}
+    m_TransformParent: {fileID: 981169415}
     m_Modifications:
     - target: {fileID: 2128395779313173791, guid: c5bdca1933fde624698bb8c6d6daa44b, type: 3}
       propertyPath: m_SortingOrder
@@ -6767,7 +6767,6 @@ Transform:
   - {fileID: 697469055}
   - {fileID: 1379052487}
   - {fileID: 1598238087}
-  - {fileID: 992662941}
   - {fileID: 2121441070}
   - {fileID: 1998871435}
   - {fileID: 706738407}
@@ -6872,6 +6871,7 @@ Transform:
   - {fileID: 1708128844}
   - {fileID: 1045900594}
   - {fileID: 666644280}
+  - {fileID: 992662941}
   m_Father: {fileID: 2013364697}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &992662941 stripped
@@ -7635,6 +7635,7 @@ MonoBehaviour:
   nextLevelName: Menu
   timeText: {fileID: 765873740}
   waitTime: 5
+  quadrantHideDelay: 2
   timer: {fileID: 2126997832}
   lastLevelName: Level2
   additionalText: {fileID: 1088455197}
