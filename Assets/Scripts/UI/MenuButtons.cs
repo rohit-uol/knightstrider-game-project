@@ -5,18 +5,17 @@ namespace TheMasterPath
 {
     public class MenuButtons : MonoBehaviour
     {
+        [SerializeField]
+        GameObject credits;
+
         public void OnPlay()
         {
             SceneManager.LoadScene("Level1");
         }
 
-        public void OnExit()
+        public void OnCredits()
         {
-#if UNITY_EDITOR
-            UnityEditor.EditorApplication.ExitPlaymode();
-#else
-            Application.Quit();
-#endif
+            credits.SetActive(!credits.activeSelf);
         }
     }
 }
