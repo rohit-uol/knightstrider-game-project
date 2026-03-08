@@ -3379,7 +3379,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 978722903}
+    m_TransformParent: {fileID: 1345491984}
     m_Modifications:
     - target: {fileID: 2128395779313173791, guid: c5bdca1933fde624698bb8c6d6daa44b, type: 3}
       propertyPath: m_SortingOrder
@@ -5466,7 +5466,6 @@ Transform:
   - {fileID: 1433464220}
   - {fileID: 82003027}
   - {fileID: 1766216504}
-  - {fileID: 992662941}
   - {fileID: 1007242311}
   - {fileID: 2654341196037336274}
   - {fileID: 1040118134}
@@ -12330,6 +12329,7 @@ Transform:
   - {fileID: 720187327}
   - {fileID: 1534996429}
   - {fileID: 1587324028}
+  - {fileID: 992662941}
   m_Father: {fileID: 2013364697}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1377736099
