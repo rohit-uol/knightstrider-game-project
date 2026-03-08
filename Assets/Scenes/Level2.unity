@@ -4354,7 +4354,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'TIME
+  m_text: '
+
+    TIME
 
     03:00'
   m_isRightToLeft: 0
@@ -7404,7 +7406,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Thanks for playing!
+  m_text: 'Congratulations, You won
+
+    Thanks for playing!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5a2b5486ae566b946968686cfa09fc5b, type: 2}
   m_sharedMaterial: {fileID: 7784931368958568835, guid: 5a2b5486ae566b946968686cfa09fc5b, type: 2}
