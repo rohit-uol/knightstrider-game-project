@@ -63,7 +63,7 @@ Assets/
 
 | Action | Input |
 |--------|-------|
-| Move   | Arrow Keys / WASD |
+| Move   | WASD |
 
 ## 🗺️ Scenes
 
